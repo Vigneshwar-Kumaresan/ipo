@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Introduction - Front Documentation | Front - Responsive Website Template</title>
+
+  <!-- Required Meta Tags Always Come First -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../favicon.ico">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+
+  <!-- CSS Implementing Plugins -->
+  <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../assets/vendor/jquery-ui-dist/jquery-ui.css">
+  <link rel="stylesheet" href="../assets/vendor/prism/prism.css">
+
+  <!-- CSS Front Template -->
+  <link rel="stylesheet" href="../assets/css/theme.min.css">
+
+  <!-- CSS Front Doc -->
+  <link rel="stylesheet" href="../assets/css/docs.min.css">
+</head>
+<body>
+  <!-- ========== HEADER ========== -->
+  <header id="header" class="header header-sticky-top header-docs header-box-shadow">
+    <div class="header-section">
+      <div id="logoAndNav" class="container-fluid px-xl-7">
+        <nav class="navbar d-block d-md-flex justify-content-start">
+          <div class="d-flex align-items-center">
+            <a class="navbar-brand" href="../documentation/index.html" aria-label="Front">
+              <img src="../assets/svg/logos/logo.svg" alt="Logo">
+            </a>
+            <a href="../documentation/changelog.html">
+              <span class="badge badge-soft-primary ml-2">v3.3</span>
+            </a>
+          </div>
+
+          <!-- Nav Links -->
+          <ul class="nav nav-classic nav-sm border-0 nav-docs-space">
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center px-2 px-sm-3 active" href="index.html">
+                <svg class="d-none d-sm-block mr-2 mb-0" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M1 2.5A1.5 1.5 0 012.5 1h3A1.5 1.5 0 017 2.5v3A1.5 1.5 0 015.5 7h-3A1.5 1.5 0 011 5.5v-3zM2.5 2a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3zm6.5.5A1.5 1.5 0 0110.5 1h3A1.5 1.5 0 0115 2.5v3A1.5 1.5 0 0113.5 7h-3A1.5 1.5 0 019 5.5v-3zm1.5-.5a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3zM1 10.5A1.5 1.5 0 012.5 9h3A1.5 1.5 0 017 10.5v3A1.5 1.5 0 015.5 15h-3A1.5 1.5 0 011 13.5v-3zm1.5-.5a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3zm6.5.5A1.5 1.5 0 0110.5 9h3a1.5 1.5 0 011.5 1.5v3a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 019 13.5v-3zm1.5-.5a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3z" clip-rule="evenodd"/>
+                </svg>
+                <span class="d-none d-sm-block">Documentation</span>
+                <span class="d-sm-none">Docs</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center px-2 px-sm-3" href="../snippets/index.html">
+                <svg class="d-none d-sm-block mr-2 mb-0" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M14.5 13.5h-13A.5.5 0 011 13V6a.5.5 0 01.5-.5h13a.5.5 0 01.5.5v7a.5.5 0 01-.5.5zm-13 1A1.5 1.5 0 010 13V6a1.5 1.5 0 011.5-1.5h13A1.5 1.5 0 0116 6v7a1.5 1.5 0 01-1.5 1.5h-13zM2 3a.5.5 0 00.5.5h11a.5.5 0 000-1h-11A.5.5 0 002 3zm2-2a.5.5 0 00.5.5h7a.5.5 0 000-1h-7A.5.5 0 004 1z" clip-rule="evenodd"/>
+                </svg>
+                Snippets
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center px-2 px-sm-3" target="_blank" href="../index.html">
+                Main Demo
+                <svg class="d-block ml-2 mb-0" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 003 14.5h8a1.5 1.5 0 001.5-1.5V9a.5.5 0 00-1 0v4a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V5a.5.5 0 01.5-.5h4a.5.5 0 000-1H3A1.5 1.5 0 001.5 5v8zm7-11a.5.5 0 01.5-.5h5a.5.5 0 01.5.5v5a.5.5 0 01-1 0V2.5H9a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
+                  <path fill-rule="evenodd" d="M14.354 1.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z" clip-rule="evenodd"/>
+                </svg>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link d-none d-xl-flex align-items-center px-2 px-sm-3" target="_blank" href="https://htmlstream.com/contact-us">
+                Get Support
+                <svg class="d-none d-sm-block ml-2 mb-0" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 003 14.5h8a1.5 1.5 0 001.5-1.5V9a.5.5 0 00-1 0v4a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V5a.5.5 0 01.5-.5h4a.5.5 0 000-1H3A1.5 1.5 0 001.5 5v8zm7-11a.5.5 0 01.5-.5h5a.5.5 0 01.5.5v5a.5.5 0 01-1 0V2.5H9a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
+                  <path fill-rule="evenodd" d="M14.354 1.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z" clip-rule="evenodd"/>
+                </svg>
+              </a>
+            </li>
+          </ul>
+          <!-- End Nav Links -->
+
+          <!-- Header Search -->
+          <form class="form-inline input-group input-group-sm input-group-merge input-group-flush d-none d-lg-flex ml-auto" style="max-width: 300px;">
+            <input class="js-hs-docs-search form-control" type="text" placeholder="Search docs..." aria-label="Search docs..." aria-describedby="docsSearch" data-url="../assets/json/docs-search.json">
+            <div class="input-group-append">
+              <span class="input-group-text" id="docsSearch">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
+          </form>
+          <!-- End Header Search -->
+        </nav>
+      </div>
+    </div>
+  </header>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="container-fluid space-top-3 space-top-md-2 pl-lg-7 pr-xl-7">
+    <div class="row justify-content-lg-end">
+      <!-- Sidebar -->
+      <nav class="col-lg-3 col-xl-2 hs-sidebar navbar-expand-lg px-0 ml-xl-7">
+        <div class="d-flex d-lg-none justify-content-between mb-3">
+          <!-- Sidebar Search -->
+          <form class="col form-inline input-group-sm">
+            <input class="js-hs-docs-search form-control form-control-sm w-100" type="text" placeholder="Search..." data-url="../assets/json/docs-search.json">
+          </form>
+          <!-- End Sidebar Search -->
+
+          <!-- Responsive Toggle Button -->
+          <button class="btn btn-link pl-0" type="button" data-toggle="collapse" data-target="#sidebar-nav" aria-controls="sidebar-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 30 30" width="30" height="30" focusable="false">
+              <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/>
+            </svg>
+          </button>
+          <!-- End Responsive Toggle Button -->
+        </div>
+
+        <!-- Sidebar Nav -->
+        <div class="collapse navbar-collapse" id="sidebar-nav">
+          <div id="sidebarNav" class="hs-sidebar-scrollbar hs-sidebar-sticky pl-2 pl-md-0 pr-2">
+            <span class="hs-sidebar-heading">Getting started</span>
+            <ul class="hs-sidebar-nav">
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link active" href="index.html">Introduction</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="gulp.html">Gulp</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="customization.html">Customization</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="credits.html">Credits</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="changelog.html">Changelog</a>
+              </li>
+            </ul>
+
+            <span class="hs-sidebar-heading">Content</span>
+            <ul class="hs-sidebar-nav">
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="typography.html">Typography</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <span class="hs-sidebar-link">Icons:</span>
+                <ul class="hs-sidebar-nav ml-2">
+                  <li class="hs-sidebar-item">
+                    <a class="hs-sidebar-link " href="exclusive-svg.html">Exclusive SVG set</a>
+                  </li>
+                  <li class="hs-sidebar-item">
+                    <a class="hs-sidebar-link " href="font-awesome.html">Font Awesome</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+            <span class="hs-sidebar-heading">Components</span>
+            <ul class="hs-sidebar-nav">
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="alerts.html">Alerts</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="avatars.html">Avatars</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="badge.html">Badge</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="breadcrumb.html">Breadcrumb</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="buttons.html">Buttons</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="cards.html">Cards</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="collapse.html">Collapse</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="devices.html">Devices</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <span class="hs-sidebar-link">Dividers:</span>
+                <ul class="hs-sidebar-nav ml-2 mb-0">
+                  <li class="hs-sidebar-item">
+                    <a class="hs-sidebar-link " href="css-divider.html">CSS divider</a>
+                  </li>
+                  <li class="hs-sidebar-item">
+                    <a class="hs-sidebar-link " href="svg-divider.html">SVG divider</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="forms.html">Forms</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="legend-indicator.html">Legend indicator</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="list-group.html">List group</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="modal.html">Modal</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="navbar.html">Navbar</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="navs.html">Navs</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="page-header.html">Page header</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="pagination.html">Pagination</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="popovers.html">Popovers</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="progress.html">Progress</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="profile-cover.html">Profile cover</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="spinners.html">Spinners</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="step.html">Step</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="sticky-footer.html">Sticky footer</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="tabs.html">Tabs</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="tables.html">Tables</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="text-highlight.html">Text Highlight</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="tooltips.html">Tooltips</a>
+              </li>
+            </ul>
+
+            <span class="hs-sidebar-heading">Utilities</span>
+            <ul class="hs-sidebar-nav">
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="borders.html">Borders</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="colors.html">Colors</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="content-alignments.html">Content alignments (with position)</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="links.html">Links</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="positions.html">Positions</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="shadows.html">Shadows</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="sizing.html">Sizing</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="spacings.html">Spacings</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="text.html">Text</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="transforms.html">Transforms</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="transitions.html">Transitions</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="others.html">Others</a>
+              </li>
+            </ul>
+
+            <span class="hs-sidebar-heading">HS Libraries</span>
+            <ul class="hs-sidebar-nav">
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="add-field.html">Add field</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="unfold.html">Unfold (Dropdown and others)</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="headers.html">Headers</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="header-mega-menu.html">Header mega menu</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="header-fullscreen.html">Header fullscreen</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="header-searches.html">Header searches</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="counters.html">Counters</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="count-characters.html">Count characters</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="file-attach.html">File attach</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="go-to.html">Go-to</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="page-preloader.html">Page preloader</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="progress-animation.html">Progress animation</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="quantity-counter.html">Quantity counter</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="scroll-nav.html">Scroll nav</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="show-animation.html">Show animation</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="step-form.html">Step form (Wizards)</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="sticky-block.html">Sticky block</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="toggle-state.html">Toggle state</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="toggle-switch.html">Toggle switch</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="switch.html">Switch</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="video-bg.html">Video background</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="video-player.html">Video player</a>
+              </li>
+            </ul>
+
+            <span class="hs-sidebar-heading">Other Libraries</span>
+            <ul class="hs-sidebar-nav">
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="aos.html">Aos (Animate on scroll)</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="chartjs.html">Chartjs</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="circles.html">Circles (Pie chart)</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="clipboard.html">Clipboard</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="countdown.html">Countdown</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="cubeportfolio.html">Cubeportfolio</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="dropzone.html">Dropzone (Drag n' drop file uploader)</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="fancybox.html">Fancybox</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="range-slider.html">Range slider</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="quill.html">Quill</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="select2.html">Select2</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="input-mask.html">Input mask</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="leaflet.html">Leaflet (Map)</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="parallax.html">Parallax</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="slick-carousel.html">Slick carousel</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <span class="hs-sidebar-link">Social APIs:</span>
+                <ul class="hs-sidebar-nav ml-2 mb-0">
+                  <li class="hs-sidebar-item">
+                    <a class="hs-sidebar-link " href="social-api-facebook.html">Facebook</a>
+                  </li>
+                  <li class="hs-sidebar-item">
+                    <a class="hs-sidebar-link " href="social-api-twitter.html">Twitter</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="typedjs.html">Typed.js</a>
+              </li>
+              <li class="hs-sidebar-item">
+                <a class="hs-sidebar-link " href="validation.html">Validation</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- End Sidebar Nav -->
+      </nav>
+      <!-- End Sidebar -->
+
+      <div class="col-lg-10 space-top-1 space-bottom-2">
+        <div class="pl-lg-9 pl-xl-8">
+          <div class="hs-docs-content-divider">
+            <h1>Introduction</h1>
+            <p class="lead">Get started with Front, Responsive Website Template for building responsive, mobile-first sites, with Bootstrap and a template starter page.</p>
+          </div>
+
+          <!-- Alert -->
+          <div class="alert alert-soft-dark" role="alert">
+            <h3>Front is a Static HTML Template</h3>
+            For the time being, we do <span class="font-weight-bold">NOT</span> offer any tutorials or any other materials on how to integrate Front with any CMS, Web Application Frameworks (including Angular, Vue, React, etc.) or any other similar technology. However, since <span class="font-weight-bold">Front is a static HTML/CSS and JS template</span>, then it <em>should be compatible</em> with any backend technology and frameworks.
+          </div>
+          <!-- End Alert -->
+
+          <!-- Alert -->
+          <div class="alert alert-soft-dark media align-items-baseline mb-6" role="alert">
+            <i class="fas fa-info-circle mr-2"></i>
+            <div class="media-body">We highly recommend to check out <a class="font-weight-bold" href="https://themes.getbootstrap.com/guide/" target="_blank">The Guide <i class="fas fa-external-link-alt fa-xs"></i></a> an official Bootstrap Theme guidelines by Bootstrap core team.</div>
+          </div>
+          <!-- End Alert -->
+
+          <!-- Heading -->
+          <h2 id="file-structure" class="hs-docs-heading">
+            File Structure <a class="anchorjs-link" href="#file-structure" aria-label="Anchor" data-anchorjs-icon="#"></a>
+          </h2>
+          <!-- End Heading -->
+
+          <details class="font-size-1 text-dark mb-6" open>
+            <summary class="mb-1">
+              <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold">front</span>
+            </summary>
+
+            <ul class="hs-docs-list-sm list-unstyled pl-4 mb-7">
+              <li>
+                <details open>
+                  <summary class="mb-1">
+                    <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold">src</span>
+                  </summary>
+                  <ul class="list-unstyled pl-4">
+                    <li>
+                      <details open>
+                        <summary class="mb-1">
+                          <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold">assets</span>
+                        </summary>
+                        <ul>
+                          <li><i class="fas fa-folder text-secondary mr-1"></i>
+                            <span class="font-weight-bold">css</span> -  <span class="text-secondary">Compiled CSS files</span>
+                          </li>
+                          <li><i class="fas fa-folder text-secondary mr-1"></i>
+                            <span class="font-weight-bold">img</span> - <span class="text-secondary">Image files</span>
+                          </li>
+                          <li><i class="fas fa-folder text-secondary mr-1"></i>
+                            <span class="font-weight-bold">json</span> - <span class="text-secondary">JSON files</span>
+                          </li>
+                          <li><i class="fas fa-folder text-secondary mr-1"></i>
+                            <span class="font-weight-bold">js</span> -  <span class="text-secondary">Core Javascript and library wrapper files</span>
+                          </li>
+                          <li><i class="fas fa-folder text-secondary mr-1"></i>
+                            <span class="font-weight-bold">scss</span> - <span class="text-secondary">SASS (SCSS) source files</span>
+                          </li>
+                          <li><i class="fas fa-folder text-secondary mr-1"></i>
+                            <span class="font-weight-bold">svg</span> - <span class="text-secondary">SVG files</span>
+                          </li>
+                          <li><i class="fas fa-folder text-secondary mr-1"></i>
+                            <span class="font-weight-bold">svg-src</span> - <span class="text-secondary">SVG source files where variables can be passed (files will be generated into <span class="font-weight-bold">svg</span> folder)</span>
+                          </li>
+                          <li><i class="fas fa-folder text-secondary mr-1"></i>
+                            <span class="font-weight-bold">vendor</span> - <span class="text-secondary">Third pary libraries (plugins)</span>
+                          </li>
+                        </ul>
+                      </details>
+                    </li>
+
+                    <li>
+                      <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold">partials</span> - <span class="text-secondary">HTML partials, learn more details on Front's <a href="../documentation/gulp.html#gulp-file-include">Gulp Documentation</a> page</span>
+                    </li>
+
+                    <li>
+                      <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold">snippets</span> - <span class="text-secondary">Ready-to-use combined components</span>
+                    </li>
+
+                    <li>
+                      <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold">documentation</span> - <span class="text-secondary">Documentation pages</span>
+                    </li>
+
+                    <li>
+                      <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold">demo-*</span> - <span class="text-secondary">Demo options with inner pages, such as Courses, App Marketplace etc.</span>
+                    </li>
+
+                    <li><i class="far fa-image mr-1"></i> favicon.ico</li>
+                    <li><i class="far fa-file-alt fa-fw mr-1"></i> index.html</li>
+                    <li><i class="far fa-file-alt fa-fw mr-1"></i> ...</li>
+                  </ul>
+                </details>
+              </li>
+
+              <li>
+                <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold">dist</span> - <span class="text-secondary">Generated distribution files</span>
+              </li>
+
+              <li>
+                <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold">gulpfiles</span> -  <span class="text-secondary">Gulp Toolkit files</span>
+              </li>
+
+              <li>
+                <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold"><s>build</s></span> - <span class="text-secondary">Generated performance ready fully production files (by default the folder is not included)</span>
+              </li>
+
+              <li>
+                <i class="fas fa-folder text-secondary mr-1"></i> <span class="font-weight-bold"><s>node_modules</s></span> - <span class="text-secondary">NPM dependencies (by default the folder is not included)</span>
+              </li>
+
+              <li><i class="far fa-file-alt fa-fw mr-1"></i> config.js</li>
+              <li><i class="far fa-file-alt fa-fw mr-1"></i> gulpfile.js</li>
+              <li><i class="far fa-file-alt fa-fw mr-1"></i> package-lock.json</li>
+              <li><i class="far fa-file-alt fa-fw mr-1"></i> package.json</li>
+              <li><i class="far fa-file-alt fa-fw mr-1"></i> README.md</li>
+            </ul>
+          </details>
+
+          <!-- Heading -->
+          <h2 id="starter-template" class="hs-docs-heading">
+            Starter template <a class="anchorjs-link" href="#starter-template" aria-label="Anchor" data-anchorjs-icon="#"></a>
+          </h2>
+          <!-- End Heading -->
+
+          <p>Starter template is a snippet code for blank HTML page. Use the below snippet as a way to quickly start any new blank page. If you are using Front's Gulp Toolkit, you may use HTML (Gulp) snippet code (read more about it on <a href="../documentation/gulp.html">Gulp</a> page).</p>
+
+          <!-- Card -->
+          <div class="card card-bordered mb-7">
+            <!-- Header -->
+            <div class="card-header">
+              <!-- Nav -->
+              <ul class="nav nav-segment" id="navTab1" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="nav-htmlTab1" data-toggle="pill" href="#nav-html1" role="tab" aria-controls="nav-html1" aria-selected="true">HTML</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="nav-gulpTab1" data-toggle="pill" href="#nav-gulp1" role="tab" aria-controls="nav-gulp1" aria-selected="false">HTML (Gulp)</a>
+                </li>
+              </ul>
+              <!-- End Nav -->
+            </div>
+            <!-- End Header -->
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="navTabContent1">
+              <div class="tab-pane fade show active" id="nav-html1" role="tabpanel" aria-labelledby="nav-htmlTab1">
+                <pre>
+                  <code class="language-html" data-lang="html">
+                    &lt;!DOCTYPE html&gt;
+                    &lt;html lang="en"&gt;
+                      &lt;head&gt;
+                        &lt;!-- Required Meta Tags Always Come First --&gt;
+                        &lt;meta charset="utf-8"&gt;
+                        &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+
+                        &lt;!-- Title --&gt;
+                        &lt;title&gt;Hello, world!&lt;/title&gt;
+
+                        &lt;!-- Favicon --&gt;
+                        &lt;link rel="shortcut icon" href="./favicon.ico"&gt;
+
+                        &lt;!-- Font --&gt;
+                        &lt;link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"&gt;
+
+                        &lt;!-- CSS Front Template --&gt;
+                        &lt;link rel="stylesheet" href="./assets/css/theme.min.css"&gt;
+                      &lt;/head&gt;
+
+                      &lt;body&gt;
+                        &lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+                        &lt;!-- JS Global Compulsory --&gt;
+                        &lt;script src="./assets/vendor/jquery/dist/jquery.min.js"&gt;&lt;/script&gt;
+                        &lt;script src="./assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"&gt;&lt;/script&gt;
+                        &lt;script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+
+                        &lt;!-- JS Front --&gt;
+                      &lt;/body&gt;
+                    &lt;/html&gt;
+                  </code>
+                </pre>
+              </div>
+
+              <div class="tab-pane fade" id="nav-gulp1" role="tabpanel" aria-labelledby="nav-gulpTab1">
+                <pre>
+                  <code class="language-html" data-lang="html">
+                    &lt;!DOCTYPE html&gt;
+                    &lt;html lang="en"&gt;
+                      &lt;head&gt;
+                        &lt;!-- Required Meta Tags Always Come First --&gt;
+                        &lt;meta charset="utf-8"&gt;
+                        &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;
+
+                        &lt;!-- Title --&gt;
+                        &lt;title&gt;Hello, world!&lt;/title&gt;
+
+                        &lt;!-- Favicon --&gt;
+                        &lt;link rel="shortcut icon" href="@@autopath/favicon.ico"&gt;
+
+                        &lt;!-- Font --&gt;
+                        &lt;link href="@@vars.googleFont" rel="stylesheet"&gt;
+
+                        &lt;!-- CSS Front Template --&gt;
+                        &lt;!-- bundlecss:theme [@@autopath] --&gt;
+                        &lt;link rel="stylesheet" href="@@autopath/assets/css/theme.css"&gt;
+                      &lt;/head&gt;
+
+                      &lt;body&gt;
+                        &lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+                        &lt;!-- JS Global Compulsory  --&gt;
+                        &lt;script src="@@autopath/assets/vendor/jquery/dist/jquery.min.js"&gt;&lt;/script&gt;
+                        &lt;script src="@@autopath/assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"&gt;&lt;/script&gt;
+                        &lt;script src="@@autopath/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+
+                        &lt;!-- JS Implementing Plugins --&gt;
+                        &lt;!-- bundlejs:vendor [@@autopath] --&gt;
+
+                        &lt;!-- JS Front --&gt;
+                        &lt;!-- bundlejs:theme [@@autopath] --&gt;
+                        &lt;script src="@@autopath/assets/js/hs.core.js"&gt;&lt;/script&gt;
+                      &lt;/body&gt;
+                    &lt;/html&gt;
+                  </code>
+                </pre>
+              </div>
+            </div>
+            <!-- End Tab Content -->
+          </div>
+          <!-- End Card -->
+
+          <!-- Heading -->
+          <h2 id="js-structure" class="hs-docs-heading">
+            JavaScript structure <a class="anchorjs-link" href="#js-structure" aria-label="Anchor" data-anchorjs-icon="#"></a>
+          </h2>
+          <!-- End Heading -->
+
+          <!-- Heading -->
+          <h3 id="core-js" class="hs-docs-heading mt-2">
+            Core JavaScript <a class="anchorjs-link" href="#core-js" aria-label="Anchor" data-anchorjs-icon="#"></a>
+          </h3>
+          <!-- End Heading -->
+
+          <p>The foundation of the JavaScript structure in Front is based on one main object which does not change the root when the new functionalities are added, but instead, it only extends without affecting the behavior of the core object. The name of the object is <code>HSCore</code> and the content of this object looks like this:</p>
+
+          <pre class="rounded mb-7">
+            <code class="language-js" data-lang="js">
+              /*
+              * HSCore
+              * @version: 2.0.0 (Mon, 25 Nov 2019)
+              * @requires: jQuery v3.0 or later
+              * @author: HtmlStream
+              * @event-namespace: .HSCore
+              * @license: Htmlstream Libraries (https://htmlstream.com/licenses)
+              * Copyright 2020 Htmlstream
+              */
+              'use strict';
+
+              $.extend({
+                HSCore: {
+                  init: function () {
+                    $(document).ready(function () {
+                      // Botostrap Tootltips
+                      $('[data-toggle="tooltip"]').tooltip();
+
+                      // Bootstrap Popovers
+                      $('[data-toggle="popover"]').popover();
+                    });
+                  },
+
+                  components: {}
+                }
+              });
+
+              $.HSCore.init();
+            </code>
+          </pre>
+
+          <!-- Heading -->
+          <h3 id="essentials-of-hscore-objects" class="hs-docs-heading">
+            Essentials of HS data-attributes <a class="anchorjs-link" href="#essentials-of-hscore-objects" aria-label="Anchor" data-anchorjs-icon="#"></a>
+          </h3>
+          <!-- End Heading -->
+
+          <p><code>data-hs-*-options</code> - Using the date-attribute, you can completely specify the settings for all plug-in parameters (except for functions) that are in the official documentation. Special cases will be described in the documentation of the corresponding wrappers/plugins. <code>*-</code> name of the wrapper/plugin.</p>
+
+          <p>Parameter names must be enclosed in double quotation marks <code>""</code>. <code>"param": ...</code></p>
+
+          <p>
+            For strings, quotation marks are required.
+            <code>"stringParam": "Test string",</code>
+            <code>"hexParam": "#ff0000"</code>
+          </p>
+
+          <p>For numbers, quotation marks are optional. <code>"intParam": 10</code></p>
+
+          <p>For boolean values, quotation marks can lead to not obvious consequences (due to implicit type conversion). It is recommended that you specify Boolean values without quotation marks. <code>"boolParam": true</code></p>
+
+          <p>For arrays and objects - quotation marks can lead to errors, this does not apply to elements of arrays and objects, which can be simple types (see the description for simple types above).</p>
+
+          <pre class="rounded">
+            <code class="language-html" data-lang="html">
+              "arrayParam": [1, "Test string", "#ff0000", false, 5],
+              "objectParam": {
+                "intParam": 1,
+                "stringParam": "Test string",
+                "hexParam": "#ff0000",
+                "boolParam": false,
+                "intParam2": 5
+              }
+            </code>
+          </pre>
+
+          <!-- Heading -->
+          <h3 id="advantages" class="hs-docs-heading">
+            Advantages <a class="anchorjs-link" href="#advantages" aria-label="Anchor" data-anchorjs-icon="#"></a>
+          </h3>
+          <!-- End Heading -->
+
+          <ul>
+            <li>Avoiding the probabilities of conflicts between Front codes and third party plugins (libraries).</li>
+            <li>Intuitive clear architecture.</li>
+            <li>Everything is structured, each component in its own file and in its component in the main object.</li>
+            <li>The ability of extending functionality without affecting the behavior of the core object and not changing the existing functionality.</li>
+            <li>Creation of wrapper components simply solves complicated initializations structures for the users.</li>
+            <li>Very easy access to any starters components and core settings from anywhere in the template.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- JS Global Compulsory  -->
+  <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+  <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS Implementing Plugins -->
+  <script src="../assets/vendor/hs-header/dist/hs-header.min.js"></script>
+  <script src="../assets/vendor/hs-go-to/dist/hs-go-to.min.js"></script>
+  <script src="../assets/vendor/jquery-ui-dist/jquery-ui.min.js"></script>
+  <script src="../assets/vendor/prism/prism.js"></script>
+
+  <!-- JSFront -->
+  <script src="../assets/js/theme.min.js"></script>
+  <script src="../assets/js/hs.autocomplete-local-search.js"></script>
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // INITIALIZATION OF HEADER
+      // =======================================================
+      var header = new HSHeader($('#header')).init();
+
+
+      // INITIALIZATION OF GO TO
+      // =======================================================
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+
+    $(window).on('load', function () {
+      // INITIALIZATION OF AUTOCOMPLET
+      // =======================================================
+      $.HSCore.components.HSLocalSearchAutocomplete.init('.js-hs-docs-search');
+    });
+  </script>
+</body>
+</html>
