@@ -92,7 +92,7 @@
                   <div class="hs-mega-menu dropdown-menu" aria-labelledby="docsMegaMenu" style="min-width: 330px;">
                     <!-- Promo Item -->
                     <div class="navbar-promo-item">
-                      <a class="navbar-promo-link" href="/ipo/ipo_index">
+                      <a class="navbar-promo-link" href="/ipo_index">
                         <div class="media align-items-center">
                           <img class="navbar-promo-icon" src="/static/svg/icons/icon-2.svg" alt="SVG">
                           <div class="media-body">
@@ -146,14 +146,14 @@
               <!-- Button -->
               <li class="navbar-nav-last-item">
                   {% if login == 'log_in' %}
-                  <form action="/ipo/logout">
+                  <form action="/logout">
                     <button type="submit" class="btn btn-primary">
                       Sign Out
                     </button>
                   </form>
                   {% else %}
 
-                  <form action="/ipo/login">
+                  <form action="/login">
                     <button type="submit" class="btn btn-primary">
                       Sign In
                     </button>
@@ -197,7 +197,7 @@
       <!-- End Header -->
 
       <div class="modal-top-cover-avatar">
-        <img class="avatar avatar-lg avatar-circle avatar-border-lg avatar-centered shadow-soft" src="../assets/svg/brands/front.svg" alt="Logo">
+          <span class="avatar avatar-lg avatar-primary avatar-circle avatar-border-lg avatar-centered shadow-soft"><span class="avatar-initials">{{ clientcode[0] }}</span></span>
       </div>
 
       <!-- Body -->
@@ -209,145 +209,78 @@
 
         <div class="row mb-6">
           <div class="col-md-4 mb-3 mb-md-0">
-            <small class="text-cap">Amount paid:</small>
-            <span class="text-dark">$316.8</span>
+            <small class="text-cap">Lot:</small>
+            <span class="text-dark">{{ BB[0][8] }}</span>
           </div>
 
           <div class="col-md-4 mb-3 mb-md-0">
-            <small class="text-cap">Date paid:</small>
-            <span class="text-dark">April 22, 2020</span>
+            <small class="text-cap">Price:</small>
+            <span class="text-dark">{{ BB[0][6] }} - {{ BB[0][7] }}</span>
           </div>
 
           <div class="col-md-4">
-            <small class="text-cap">Payment method:</small>
+            <small class="text-cap">Expiry:</small>
             <div class="d-flex align-items-center">
-              <img class="avatar avatar-xss mr-2" src="../assets/svg/brands/mastercard.svg" alt="Image Description">
-              <span class="text-dark">•••• 4242</span>
+              <span class="text-dark">{{ BB[0][4].strftime('%d %b, %y') }}  -  {{ BB[0][5].strftime('%d %b, %y') }}</span>
             </div>
           </div>
         </div>
 
         <small class="text-cap mb-2">Summary</small>
 
-          <div class="js-add-field"
-                     data-hs-add-field-options='{
-                        "template": "#addInvoiceItemTemplate",
-                        "container": "#addInvoiceItemContainer",
-                        "defaultCreated": 0
-                      }'>
-                  <!-- Title -->
-                  <div class="bg-light border-bottom p-2 mb-3">
-                    <div class="row">
+            <!-- Form Group -->
+            <div class="js-add-field row form-group"
+                 data-hs-add-field-options='{
+                    "template": "#addEmailFieldTemplate",
+                    "container": "#addEmailFieldContainer",
+                    "defaultCreated": 0
+                  }'>
+              <label for="qty" class="col-sm-3 col-form-label input-label">Qty</label>
 
-                      <div class="col-sm-3 d-none d-sm-inline-block">
-                        <h6 class="card-title text-cap">Quantity</h6>
-                      </div>
-                      <div class="col-sm-2 d-none d-sm-inline-block">
-                        <h6 class="card-title text-cap">Rate</h6>
-                      </div>
+              <div class="number col-sm-9">
+                <div class="">
+                      <input type="qty" class="form-control" name="price" id="price" placeholder="Enter the price" aria-label="Email address">
 
-                    </div>
-                  </div>
-                  <!-- End Title -->
-
-                  <!-- Content -->
-                  <div class="row">
-
-
-                    <div class="col-12 col-sm-auto col-md-3">
-                      <!-- Quantity Counter -->
-                      <div class="js-quantity-counter input-group-quantity-counter mb-3">
-                        <input type="number" class="js-result form-control input-group-quantity-counter-control" value="1">
-
-                        <div class="input-group-quantity-counter-toggle">
-                          <a class="js-minus input-group-quantity-counter-btn" href="javascript:;">
-                            <i class="tio-remove"></i>
-                          </a>
-                          <a class="js-plus input-group-quantity-counter-btn" href="javascript:;">
-                            <i class="tio-add"></i>
-                          </a>
-                        </div>
-                      </div>
-                      <!-- End Quantity Counter -->
-                    </div>
-
-                    <div class="col-12 col-sm col-md-2">
-                      <!-- Input Group -->
-                      <div class="mb-3">
-                        <input type="number" class="form-control" placeholder="00" aria-label="00">
-                      </div>
-                      <!-- End Input Group -->
-                    </div>
-
-
-                  </div>
-                  <!-- End Content -->
-
-                  <!-- Container For Input Field -->
-                  <div id="addInvoiceItemContainer"></div>
-
-                  <a href="javascript:;" class="js-create-field form-link btn btn-sm btn-no-focus btn-ghost-primary">
-                    <i class="tio-add"></i> Add item
-                  </a>
-
-                  <!-- Add Phone Input Field -->
-                  <div id="addInvoiceItemTemplate" style="display: none;">
-                    <!-- Content -->
-                    <div class="input-group-add-field">
-                      <div class="row">
-                        <div class="col-md-5">
-                          <input type="text" class="form-control mb-3" placeholder="Item name" aria-label="Item name">
-                          <input type="text" class="form-control mb-3" placeholder="Description" aria-label="Description">
-                        </div>
-
-                        <div class="col-12 col-sm-auto col-md-3">
-                          <!-- Quantity Counter -->
-                          <div class="js-quantity-counter input-group-quantity-counter mb-3">
-                            <input type="number" class="js-result form-control input-group-quantity-counter-control" value="1">
-
-                            <div class="input-group-quantity-counter-toggle">
-                              <a class="js-minus btn btn-icon btn-xs btn-white rounded-circle" href="javascript:;">
-                                <i class="tio-remove"></i>
-                              </a>
-                              <a class="js-plus btn btn-icon btn-xs btn-white rounded-circle" href="javascript:;">
-                                <i class="tio-add"></i>
-                              </a>
-                            </div>
-                          </div>
-                          <!-- End Quantity Counter -->
-                        </div>
-
-                        <div class="col-12 col-sm col-md-2">
-                          <!-- Input Group -->
-                          <div class="mb-3">
-                            <input type="number" class="form-control" placeholder="00" aria-label="00">
-                          </div>
-                          <!-- End Input Group -->
-                        </div>
-
-                        <div class="col col-md-2">
-                          <input type="number" class="form-control-plaintext mb-3" placeholder="$0.00" aria-label="$0.00">
-                        </div>
-                      </div>
-                      <!-- End Row -->
-
-                      <a class="js-delete-field input-group-add-field-delete" href="javascript:;" data-toggle="tooltip" data-placement="top" title="Remove item">
-                        <i class="tio-clear"></i>
+                      <a class="js-minus btn btn-xs btn-icon btn-outline-secondary rounded-circle" href="javascript:;" style="margin-top:-78px;margin-right:156px;">
+                        <i class="fas fa-minus"></i>
+                      </a>
+                      <a class="js-plus btn btn-xs btn-icon btn-outline-secondary rounded-circle" href="javascript:;">
+                        <i class="fas fa-plus"></i>
                       </a>
                     </div>
-                    <!-- End Content -->
                   </div>
-                  <!-- End Add Phone Input Field -->
-                </div>
+              </div>
+                <label for="price" class="col-sm-3 col-form-label input-label mt-2">Price</label>
+
+              <div class="col-sm-9" style="padding-top:10px;">
+
+                <input type="price" class="form-control" name="price" id="price" placeholder="Enter the price" aria-label="Email address">
+                <!-- Container For Input Field -->
+              </div>
+
+            </div>
+            <!-- End Form Group -->
+
+            <!-- Add Phone Input Field -->
+            <div id="addEmailFieldTemplate" style="display: none;">
+              <div class="input-group-add-field">
+                <input type="email" class="form-control" data-name="addressLine" placeholder="Email address" aria-label="Email address">
+
+                <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
+                  <i class="fas fa-times"></i>
+                </a>
+              </div>
+            </div>
+            <!-- End Add Phone Input Field -->
 
         <div class="d-flex justify-content-between align-items-center">
-              <strong>Amount paid</strong>
-              <strong>$316.8</strong>
+              <strong></strong>
+              <strong><input type="checkbox" name="cutoff"/> Cut-Off</strong>
         </div>
 
         <hr class="my-5">
 
-        <p class="modal-footer-text">If you have any questions, please contact us at <a href="mailto:example@gmail.com">example@gmail.com</a> or call at <a class="text-nowrap" href="#">+1 898 34-5492</a></p>
+        <button class="btn btn-primary btn-block">Order</button>
       </div>
       <!-- End Body -->
     </div>
@@ -385,7 +318,7 @@
                         </div>
 
                         <div class="modal-body">
-                            <form class="js-validate" action="/ipo/forgot_clientcode_update" method="post">
+                            <form class="js-validate" action="/forgot_clientcode_update" method="post">
                                 <div class="text-center mb-5">
                                   <h2>Forgot Client Code ?</h2>
                                   <p>Enter your PAN number and we'll send you client code through your Registered Email.</p>
@@ -402,7 +335,7 @@
                                 <button type="submit" class="btn btn-lg btn-block btn-primary">Submit</button>
 
                                 <div class="text-center mt-2">
-                                  <a class="btn btn-link" href="/ipo/login">
+                                  <a class="btn btn-link" href="/login">
                                     <i class="tio-chevron-left"></i> Back to Sign in
                                   </a>
                                 </div>
@@ -452,7 +385,7 @@
                                     </div>
 
                                     <div class="text-center mt-2">
-                                      <a class="btn btn-link" href="/ipo/login">
+                                      <a class="btn btn-link" href="/login">
                                         <i class="tio-chevron-left"></i> Back to Sign in
                                       </a>
                                     </div>
@@ -493,7 +426,7 @@
                                 <span class="avatar avatar-lg  avatar-circle avatar-border-lg avatar-centered shadow-soft"><img class="avatar-img" src="static/zlogo/apple-touch-icon.jpg" alt="Image Description"></span>
                             {% endif %}
                         </div>
-                          <form action="/ipo/otp" method="post">
+                          <form action="/otp" method="post">
                         <div class="modal-body">
                             <div class="text-center">
                               <h2>Sign in</h2>
@@ -507,7 +440,7 @@
                                 <label class="input-label" for="uid">Client Code</label>
 
                                 <input type="text" class="form-control form-control-lg" id="uid" name="uid" placeholder="Client Code" aria-label="Client Code" required data-msg="Please enter a valid Client Code.">
-                                  <p><a href="/ipo/forgotclientcode" style="padding:5px;float:right;">Forgot Clientcode ?</a></p>
+                                  <p><a href="/forgotclientcode" style="padding:5px;float:right;">Forgot Clientcode ?</a></p>
                               </div>
                             {% else %}
                                <div class="card-body text-center">
@@ -515,7 +448,7 @@
 
                                     <h4 class="mb-1" style="padding-top:20px;">{{ clientcode }}</h4>
                                      <input type="hidden" class="form-control form-control-lg" id="uid" name="uid" value="{{ clientcode }}">
-                                    <a class="removecookie" href="/ipo/removecookie">Change user</a>
+                                    <a class="removecookie" href="/removecookie">Change user</a>
 
                                </div>
                             {% endif %}
@@ -614,12 +547,12 @@
                   {% endif %}
                 {% endwith %}
 
-                  <button type="submit" class="btn btn-lg btn-block btn-primary" formaction="/ipo/auth" onclick="this.classList.toggle('button--loading')">
+                  <button type="submit" class="btn btn-lg btn-block btn-primary" formaction="/auth" onclick="this.classList.toggle('button--loading')">
                     <span class="button__text">Verify my account</span>
                   </button>
 
                   <div class="text-center mt-3">
-                    <p>Haven't received it? <a href="/ipo/resendotp">Resend a new code.</a></p>
+                    <p>Haven't received it? <a href="/resendotp">Resend a new code.</a></p>
                   </div>
                 </div>
               </form>
@@ -711,7 +644,7 @@
                                 <div class="row mb-3">
 
                                   <div class="col">
-                                    <a href="/ipo/scripts?name={{ BB[i][0] }}">
+                                    <a href="/scripts?name={{ BB[i][0] }}">
                                     <div class="media align-items-center">
 
                                       <div class="media-body">
@@ -767,7 +700,7 @@
                                   </div>
                                 </div>
                                 <!-- End Row -->
-                                <a href="/ipo/scripts?name={{ BB[i][0] }}">
+                                <a href="/scripts?name={{ BB[i][0] }}">
                                   <div class="row">
                                     <div class="col">
                                 <h3 class="mb-3">
@@ -850,7 +783,7 @@
                                         <a class="font-weight-bold" href="#" target="_blank" style="font-size: 15px;">RHP Doc <i class="fas fa-external-link-alt fa-xs"></i></a>
                                       </div>
                                       <div class="col-auto">
-                                          <form action="/ipo/order" method="post">
+                                          <form action="/order" method="post">
                                           {% set inv = BB[i][7] | int * BB[i][8] | int %}
                                             <button class="btn btn-xs btn-primary" type="submit">
                                                     Invest &#8377; {{ inv }}</button>
@@ -875,7 +808,7 @@
                                 <div class="row mb-3">
 
                                   <div class="col">
-                                    <a href="/ipo/scripts?name={{ BB[i][0] }}">
+                                    <a href="/scripts?name={{ BB[i][0] }}">
                                     <div class="media align-items-center">
 
                                       <div class="media-body">
@@ -931,7 +864,7 @@
                                   </div>
                                 </div>
                                 <!-- End Row -->
-                                <a href="/ipo/scripts?name={{ BB[i][0] }}">
+                                <a href="/scripts?name={{ BB[i][0] }}">
                                   <div class="row">
                                     <div class="col">
                                 <h3 class="mb-3">
@@ -1620,6 +1553,8 @@
           });
         });
 
+
+
       // INITIALIZATION OF HEADER
       // =======================================================
       var header = new HSHeader($('#header')).init();
@@ -1801,7 +1736,25 @@ function mysearchFunction() {
                       }
                     }
       </script>
+  <script src="/static/vendor/hs-add-field/dist/hs-add-field.min.js"></script>
   <!-- IE Support -->
+  	$(document).ready(function() {
+			$('.minus').click(function () {
+				var $input = $(this).parent().find('input');
+				var count = parseInt($input.val()) - 1;
+				count = count < 1 ? 1 : count;
+				$input.val(count);
+				$input.change();
+				return false;
+			});
+			$('.plus').click(function () {
+				var $input = $(this).parent().find('input');
+				$input.val(parseInt($input.val()) + 1);
+				$input.change();
+				return false;
+			});
+		});
+
   <script>
     if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="/static/vendor/babel-polyfill/dist/polyfill.min.js"><\/script>');
   </script>
