@@ -386,8 +386,9 @@ def ipo_index():
         ipo_close = BB.loc[BB[10] == 'closed']
         print(ipo_close)
 
-        return render_template('ipo_index.html', BB=BB.values.tolist(), DLST=DLST.values.tolist(),TAKEOVER=TAKEOVER.values.tolist(), ipo_up=len(ipo_up),ipo_close=ipo_close.values.tolist(),clientcode=email,uid=None,login=login,name=name,code=code,log=None,forgotup=None,order=None)
+        return render_template('ipo_index.html', BB=BB.values.tolist(), DLST=DLST.values.tolist(),TAKEOVER=TAKEOVER.values.tolist(), ipo_up=len(ipo_up),ipo_close=ipo_close.values.tolist(),clientcode=email,uid=None,login=login,name=name,code=code,log=None,forgotup=None,order=None,BBC=None)
     else:
+
         return render_template('ipo_index.html', BB=None, DLST=None, TAKEOVER=None, ipo_up=None, ipo_close=None,clientcode=email,uid=None)
 
 
@@ -401,15 +402,22 @@ def scripts():
 
 @app.route('/order', methods=['POST', 'GET'])
 def order():
+    script = request.args.get('invest_script')
+    print(script)
+
     email = request.cookies.get('userID')
     login = session["login_check"]
     print("Login:",login)
     if login == 'log_in':
         name=session["otname"]
         code=email
+        log=None
+        order='order'
     else:
         name= None
         code= None
+        log='login'
+        order= None
     print(email)
     if email == None:
         pass
@@ -419,7 +427,7 @@ def order():
     mycursor.execute("SELECT * FROM ipo")
     data = mycursor.fetchall()
     if data:
-
+        print("hello")
         df_data = pd.DataFrame(data)
         df_data_filter = df_data[(df_data[2] == 'IND') & (df_data[9] == '1')]
         BB = df_data_filter.loc[df_data_filter[3] == 'BB']
@@ -427,10 +435,11 @@ def order():
         TAKEOVER = df_data_filter.loc[df_data_filter[3] == 'TAKEOVER']
         ipo_up = BB.loc[BB[10] == 'open']
         ipo_close = BB.loc[BB[10] == 'closed']
-        print(ipo_close)
+        BBC=BB.loc[BB[0] == script]
+        print(BB)
     return render_template('ipo_index.html', BB=BB.values.tolist(), DLST=DLST.values.tolist(),
                            TAKEOVER=TAKEOVER.values.tolist(), ipo_up=len(ipo_up), ipo_close=ipo_close.values.tolist(),
-                           clientcode=email, uid=None, login=None, name=name, code=code, log=None, forgotup=None,order='order')
+                           clientcode=email, uid=None, login=login, name=name, code=code, log=log, forgotup=None,order=order,BBC=BBC.values.tolist())
 
 
 @app.route('/admin_login/', methods=['GET', 'POST'])

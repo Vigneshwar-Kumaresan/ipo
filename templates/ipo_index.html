@@ -37,6 +37,34 @@
             }
 
     </style>
+    <style>
+
+        .plus-minus-input {
+          -webkit-align-items: center;
+              -ms-flex-align: center;
+                  align-items: center;
+        }
+
+        .plus-minus-input .input-group-field {
+          text-align: center;
+          margin-left: 0.5rem;
+          margin-right: 0.5rem;
+          padding: 1rem;
+        }
+
+        .plus-minus-input .input-group-field::-webkit-inner-spin-button,
+        .plus-minus-input .input-group-field ::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+                  appearance: none;
+        }
+
+        .plus-minus-input .input-group-button .circle {
+          border-radius: 50%;
+          padding: 0.25em 0.8em;
+        }
+
+
+    </style>
 </head>
 <body>
   <!-- ========== HEADER ========== -->
@@ -197,31 +225,31 @@
       <!-- End Header -->
 
       <div class="modal-top-cover-avatar">
-          <span class="avatar avatar-lg avatar-primary avatar-circle avatar-border-lg avatar-centered shadow-soft"><span class="avatar-initials">{{ clientcode[0] }}</span></span>
+          <span class="avatar avatar-lg avatar-primary avatar-circle avatar-border-lg avatar-centered shadow-soft"><span class="avatar-initials">{{ BBC[0][0][0] }}</span></span>
       </div>
 
       <!-- Body -->
       <div class="modal-body pt-3 pb-sm-5 px-sm-5">
         <div class="text-center mb-5">
-          <h3 class="mb-1">{{ name }}</h3>
-          <span class="d-block">{{ code }}</span>
+          <h3 class="mb-1">{{ BBC[0][1] }}</h3>
+          <span class="d-block">{{ BBC[0][0] }}</span>
         </div>
 
         <div class="row mb-6">
           <div class="col-md-4 mb-3 mb-md-0">
             <small class="text-cap">Lot:</small>
-            <span class="text-dark">{{ BB[0][8] }}</span>
+            <span class="text-dark">{{ BBC[0][8] }}</span>
           </div>
 
           <div class="col-md-4 mb-3 mb-md-0">
             <small class="text-cap">Price:</small>
-            <span class="text-dark">{{ BB[0][6] }} - {{ BB[0][7] }}</span>
+            <span class="text-dark">{{ BBC[0][6] }} - {{ BBC[0][7] }}</span>
           </div>
 
           <div class="col-md-4">
             <small class="text-cap">Expiry:</small>
             <div class="d-flex align-items-center">
-              <span class="text-dark">{{ BB[0][4].strftime('%d %b, %y') }}  -  {{ BB[0][5].strftime('%d %b, %y') }}</span>
+              <span class="text-dark">{{ BBC[0][4].strftime('%d %b, %y') }}  -  {{ BBC[0][5].strftime('%d %b, %y') }}</span>
             </div>
           </div>
         </div>
@@ -235,26 +263,51 @@
                     "container": "#addEmailFieldContainer",
                     "defaultCreated": 0
                   }'>
-              <label for="qty" class="col-sm-3 col-form-label input-label">Qty</label>
+              <label for="qty" class="col-sm-6 col-form-label input-label">Qty</label>
 
-              <div class="number col-sm-9">
-                <div class="">
-                      <input type="qty" class="form-control" name="price" id="price" placeholder="Enter the price" aria-label="Email address">
+              <div class="number col-sm-6">
+                  <!-- Change the `data-field` of buttons and `name` of input field's for multiple plus minus buttons-->
+                    <!-- <div class="input-group plus-minus-input">
 
-                      <a class="js-minus btn btn-xs btn-icon btn-outline-secondary rounded-circle" href="javascript:;" style="margin-top:-78px;margin-right:156px;">
-                        <i class="fas fa-minus"></i>
-                      </a>
-                      <a class="js-plus btn btn-xs btn-icon btn-outline-secondary rounded-circle" href="javascript:;">
-                        <i class="fas fa-plus"></i>
-                      </a>
+                      <input class="form-control input-group-field" type="number" name="quantity" id="qty" value="{{ BBC[0][8] }}" min="{{ BBC[0][8] }}">
+                        <div class="input-group-button">
+                        <button type="button" class="btn btn-xs btn-icon btn-outline-secondary rounded-circle" data-quantity="minus" data-field="quantity" style="margin-left:-80px;">
+                          <i class="fas fa-minus" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                        <div class="input-group-button">
+                        <button type="button" class="btn btn-xs btn-icon btn-outline-secondary rounded-circle" data-quantity="plus" data-field="quantity" style="margin-left:-50px;">
+                          <i class="fas fa-plus" aria-hidden="true"></i>
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                    -->
+                  <!-- Quantity Counter -->
+                    <!-- Quantity -->
+                    <div class="bg-white border rounded py-2 px-3">
+                      <div class="js-quantity-counter row align-items-center">
+                        <div class="col-7">
+                          <input class="form-control h-auto border-0 rounded p-0" type="text" name="quantity" id="qty" value="{{ BBC[0][8] }}" min="{{ BBC[0][8] }}" style="text-align:right;">
+                        </div>
+                        <div class="col-5 text-right">
+                          <a class="js-minus btn btn-xs btn-icon btn-outline-secondary rounded-circle" data-quantity="minus" data-field="quantity" >
+                            <i class="fas fa-minus"></i>
+                          </a>
+                          <a class="js-plus btn btn-xs btn-icon btn-outline-secondary rounded-circle"  data-quantity="plus" data-field="quantity" >
+                            <i class="fas fa-plus"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Quantity -->
+                    <!-- End Quantity Counter -->
+
               </div>
-                <label for="price" class="col-sm-3 col-form-label input-label mt-2">Price</label>
+                <label for="price" class="col-sm-6 col-form-label input-label mt-2">Price</label>
 
-              <div class="col-sm-9" style="padding-top:10px;">
+              <div class="col-sm-6" style="padding-top:10px;padding-left:15px;padding-right:22px;">
 
-                <input type="price" class="form-control" name="price" id="price" placeholder="Enter the price" aria-label="Email address">
+                <input type="number" class="form-control input-group-field" name="price" id="price" placeholder="Enter the price" aria-label="Email address" min="{{BBC[0][6]}}" max="{{BBC[0][7]}}" style="text-align:center;" value="{{ BBC[0][6] }}">
                 <!-- Container For Input Field -->
               </div>
 
@@ -280,7 +333,7 @@
 
         <hr class="my-5">
 
-        <button class="btn btn-primary btn-block">Order</button>
+          <button class="p btn btn-primary btn-block"><span style="margin-left:10px;text-align:center;">Invest  &#x20B9;<input id="output" style="background-color: #377DFF;color:#ffffff;border: 0px none;font-weight: bold; text-align:center;" size="6" readonly></span></button>
       </div>
       <!-- End Body -->
     </div>
@@ -675,13 +728,13 @@
                                     <form>
 
                                       <div class="hs-unfold">
-                  <a class="js-hs-unfold-invoker btn btn-icon btn-sm btn-ghost-primary mb-1" href="javascript:;"
-                     data-hs-unfold-options='{
-                       "target": "#importResumeFromDropdown",
-                       "type": "css-animation"
-                     }'>
-                    <i class="fas fa-share-alt"></i>
-                  </a>
+                                          <a class="js-hs-unfold-invoker btn btn-icon btn-sm btn-ghost-primary mb-1" href="javascript:;"
+                                             data-hs-unfold-options='{
+                                               "target": "#importResumeFromDropdown",
+                                               "type": "css-animation"
+                                             }'>
+                                            <i class="fas fa-share-alt"></i>
+                                          </a>
 
                   <div id="importResumeFromDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-right mt-1">
                     <a class="dropdown-item" href="#">
@@ -783,8 +836,9 @@
                                         <a class="font-weight-bold" href="#" target="_blank" style="font-size: 15px;">RHP Doc <i class="fas fa-external-link-alt fa-xs"></i></a>
                                       </div>
                                       <div class="col-auto">
-                                          <form action="/order" method="post">
+                                          <form action="/order?invest_script={{ BB[i][0]}}" method="post">
                                           {% set inv = BB[i][7] | int * BB[i][8] | int %}
+                                              <input type="hidden" id="invest_script" name="invest_name" value="{{ BB[i][0]}}">
                                             <button class="btn btn-xs btn-primary" type="submit">
                                                     Invest &#8377; {{ inv }}</button>
                                               </form>
@@ -798,255 +852,7 @@
                       </div>
                     {% endif %}
                 {% endfor %}
-                {% for i in range(BB|length) %}
-                    {% if BB[i][10] == 'open' %}
-                      <div class="col-sm-6 mb-5">
 
-                          <div class="card card-bordered card-hover-shadow h-100">
-
-                              <div class="card-body">
-                                <div class="row mb-3">
-
-                                  <div class="col">
-                                    <a href="/scripts?name={{ BB[i][0] }}">
-                                    <div class="media align-items-center">
-
-                                      <div class="media-body">
-                                          <div class="media align-items-center">
-                                              <div class="avatar avatar-circle mr-2">
-                                                <img class="avatar-img" src="static/zlogo/scripts/{{ BB[i][0] }}.jpg" onerror="this.onerror=null;this.src='static/zlogo/scripts/EKI.jpg';" >
-                                              </div>
-                                              <div class="media-body">
-                                                <h6>
-                                                  {% if BB[i][1]|length > 19 %}
-                                                      <span> {{ BB[i][0] }}</span>
-                                                    {% else %}
-                                                      <span> {{ BB[i][0] }}</span>
-                                                    {% endif %}
-
-                                                </h6>
-                                              </div>
-                                            </div>
-
-                                      </div>
-
-                                    </div>
-                                    </a>
-                                  </div>
-
-                                  <div class="col-auto">
-                                    <!-- Checkbbox Bookmark -->
-                                    <form>
-
-                                      <div class="hs-unfold">
-                  <a class="js-hs-unfold-invoker btn btn-icon btn-sm btn-ghost-primary mb-1" href="javascript:;"
-                     data-hs-unfold-options='{
-                       "target": "#importResumeFromDropdown",
-                       "type": "css-animation"
-                     }'>
-                    <i class="fas fa-share-alt"></i>
-                  </a>
-
-                  <div id="importResumeFromDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-right mt-1">
-                    <a class="dropdown-item" href="#">
-                      <i class="fab fa-facebook dropdown-item-icon"></i> Facebook
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fab fa-instagram dropdown-item-icon"></i> Instagram
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fab fa-twitter dropdown-item-icon"></i> Twitter
-                    </a>
-                  </div>
-                </div>
-                                    </form>
-                                    <!-- End Checkbbox Bookmark -->
-                                  </div>
-                                </div>
-                                <!-- End Row -->
-                                <a href="/scripts?name={{ BB[i][0] }}">
-                                  <div class="row">
-                                    <div class="col">
-                                <h3 class="mb-3">
-                                  {{ BB[i][1] }}
-                                </h3>
-
-
-
-                                <span class="d-block font-size-1 text-body mb-1">
-                                  <span class="badge badge-soft-primary"><i class="fas fa-sort-numeric-up"></i> </span> <span data-toggle="tooltip" data-placement="right" title="Minimum Qty">{{ BB[i][8] }}</span>
-                                </span>
-                                      <span class="d-block font-size-1 text-body mb-1">
-                                        <span class="badge badge-soft-primary" style="padding:6px;"><i class="fas fa-rupee-sign"></i></span> <span data-toggle="tooltip" data-placement="right" title="Price Range"> {{ BB[i][6] }} - {{ BB[i][7] }}</span>
-                                </span>
-                                      <span class="d-block font-size-1 text-body mb-1">
-                                        {% if BB[i][4].strftime('%d %b, %Y') == '01 Jan, 1000' %}
-                                        <span class="badge badge-soft-primary"><i class="far fa-calendar"></i></span> <span data-toggle="tooltip" data-placement="right" title="Date Range">01 Jan, 21 - 02 Jan, 21</span>
-                                        {% else %}
-                                        <span class="badge badge-soft-primary"><i class="far fa-calendar"></i></span> <span data-toggle="tooltip" data-placement="right" title="Date Range">{{ BB[i][4].strftime('%d %b, %y') }}  -  {{ BB[i][5].strftime('%d %b, %y') }}</span>
-                                        {% endif %}
-                                      </span>
-                                </div>
-                                <div class="col-4">
-                                  <!-- Chart -->
-                                  <div style="padding-top:30px;">
-                                  <div class="chartjs-custom" style="height: 3rem;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                                    <canvas class="js-chart chartjs-render-monitor" data-hs-chartjs-options="{
-                                              &quot;type&quot;: &quot;line&quot;,
-                                              &quot;data&quot;: {
-                                                 &quot;labels&quot;: [&quot;1 May&quot;,&quot;2 May&quot;,&quot;3 May&quot;,&quot;4 May&quot;,&quot;5 May&quot;,&quot;6 May&quot;,&quot;7 May&quot;,&quot;8 May&quot;,&quot;9 May&quot;,&quot;10 May&quot;,&quot;11 May&quot;,&quot;12 May&quot;,&quot;13 May&quot;,&quot;14 May&quot;,&quot;15 May&quot;,&quot;16 May&quot;,&quot;17 May&quot;,&quot;18 May&quot;,&quot;19 May&quot;,&quot;20 May&quot;,&quot;21 May&quot;,&quot;22 May&quot;,&quot;23 May&quot;,&quot;24 May&quot;,&quot;25 May&quot;,&quot;26 May&quot;,&quot;27 May&quot;,&quot;28 May&quot;,&quot;29 May&quot;,&quot;30 May&quot;,&quot;31 May&quot;],
-                                                 &quot;datasets&quot;: [{
-                                                  &quot;data&quot;: [21,20,24,20,18,17,15,17,18,30,31,30,30,35,25,35,35,40,60,90,90,90,85,70,75,70,30,30,30,50,72],
-                                                  &quot;backgroundColor&quot;: [&quot;rgba(55, 125, 255, 0)&quot;, &quot;rgba(255, 255, 255, 0)&quot;],
-                                                  &quot;borderColor&quot;: &quot;#377dff&quot;,
-                                                  &quot;borderWidth&quot;: 2,
-                                                  &quot;pointRadius&quot;: 0,
-                                                  &quot;pointHoverRadius&quot;: 0
-                                                }]
-                                              },
-                                              &quot;options&quot;: {
-                                                 &quot;scales&quot;: {
-                                                   &quot;yAxes&quot;: [{
-                                                     &quot;display&quot;: false
-                                                   }],
-                                                   &quot;xAxes&quot;: [{
-                                                     &quot;display&quot;: false
-                                                   }]
-                                                 },
-                                                &quot;hover&quot;: {
-                                                  &quot;mode&quot;: &quot;nearest&quot;,
-                                                  &quot;intersect&quot;: false
-                                                },
-                                                &quot;tooltips&quot;: {
-                                                  &quot;postfix&quot;: &quot;k&quot;,
-                                                  &quot;hasIndicator&quot;: true,
-                                                  &quot;intersect&quot;: false
-                                                }
-                                              }
-                                            }" style="display: block; width: 155px; height: 48px;" width="155" height="48">
-                                    </canvas>
-                                  </div>
-
-                                  <div style="padding-top:20px;">
-                                  <!--
-                                  <span class="badge badge-soft-success">
-                                      <i class="fas fa-arrow-up"></i> 1.7%
-                                  </span>
-                                    <span class="font-size-1 text-body mb-1"> 29.1%</span> -->
-                                    </div>
-                                    </div>
-                                </div>
-                                    </div>
-                                  </a>
-                              </div>
-
-                              <div class="card-footer">
-                                <span class="d-block font-size-1 text-body mb-1">
-                                  <div class="row">
-                                      <div class="col" style="padding-top:2px;padding-bottom: 10px;">
-                                        <a class="font-weight-bold" href="#" target="_blank" style="font-size: 15px;">RHP Doc <i class="fas fa-external-link-alt fa-xs"></i></a>
-                                      </div>
-                                      <div class="col-auto">
-
-                                                <!-- Search -->
-                                                <div id="searchPushTop{{ BB[i][0] }}" class="search-push-top">
-                                                  <div class="container position-relative">
-                                                    <div class="search-push-top-content">
-
-                                                        <!-- Card -->
-                                                            <div class="">
-
-                                                                <h5 class="card-title" style="width: 500px;padding:10px;">Basic info</h5>
-                                                                  <div class="search-push-top-close-btn">
-                                                            <div class="hs-unfold">
-                                                              <a class="js-hs-unfold-invoker btn btn-icon btn-xs btn-soft-secondary" href="javascript:;"
-                                                                 data-hs-unfold-options='{
-                                                                  "target": "#searchPushTop{{BB[i][0]}}",
-                                                                  "type": "jquery-slide"
-                                                                 }'>
-                                                                <svg width="10" height="10" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-                                                                  <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
-                                                                </svg>
-                                                              </a>
-                                                            </div>
-                                                          </div>
-
-                                                              <!-- Body -->
-                                                              <div class="" style="padding:10px;">
-                                                                <form>
-                                                                  <!-- Form Group -->
-                                                                  <div class="js-add-field row form-group"
-                                                                       data-hs-add-field-options='{
-                                                                          "template": "#addPhoneFieldTemplate",
-                                                                          "container": "#addPhoneFieldContainer",
-                                                                          "defaultCreated": 0
-                                                                        }'>
-                                                                    <label for="phoneLabel" class="col-sm-2 col-form-label input-label">UPI</label>
-
-                                                                    <div class="col-sm-10">
-                                                                      <div class="input-group align-items-center">
-                                                                        <input type="text" class="js-masked-input form-control" name="phone" id="phoneLabel" placeholder="Enter your UPI ID" aria-label="+x(xxx)xxx-xx-xx" value=""
-                                                                               data-hs-mask-options='{
-                                                                                 "template": "+0(000)000-00-00"
-                                                                               }'>
-
-                                                                        <div class="input-group-append">
-                                                                          <!-- Select -->
-                                                                          <select class="js-custom-select custom-select dropdown-toggle" name="phoneSelect"
-                                                                                data-hs-select2-options='{
-                                                                                  "minimumResultsForSearch": "Infinity",
-                                                                                  "customClass": "custom-select",
-                                                                                  "dropdownAutoWidth": true,
-                                                                                  "width": true
-                                                                                }'>
-                                                                            <option value="Bank" selected>Bank</option>
-                                                                            <option value="Home">Home</option>
-                                                                            <option value="Work">Work</option>
-                                                                            <option value="Fax">Fax</option>
-                                                                            <option value="Direct">Direct</option>
-                                                                          </select>
-                                                                          <!-- End Select -->
-                                                                        </div>
-                                                                      </div>
-
-
-                                                                    </div>
-                                                                  </div>
-                                                                  <!-- End Form Group -->
-
-                                                                </form>
-                                                              </div>
-                                                              <!-- End Body -->
-
-
-                                                            </div>
-                                                        <!-- End Card -->
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <!-- End Search -->
-
-                                                <!-- Search -->
-                                                <div class="hs-unfold">
-                                                  <a class="js-hs-unfold-invoker btn btn-xs btn-primary" href="javascript:;"
-                                                     data-hs-unfold-options='{
-                                                      "target": "#searchPushTop{{ BB[i][0] }}",
-                                                      "type": "jquery-slide"
-                                                     }'>
-                                                      {% set inv = BB[i][7] | int * BB[i][8] | int %}
-                                                    Invest &#8377; {{ inv }}
-                                                  </a>
-                                                </div>
-                                                <!-- End Search -->
-                                      </div>
-                                  </div>
-                                </span>
-                              </div>
-                            </div>
-
-                      </div>
-                    {% endif %}
-                {% endfor %}
 
             {% endif %}
 
@@ -1703,8 +1509,21 @@ function mysearchFunction() {
         $("#Forgotcc").modal('show');
         $("#forgotup").modal('show');
         $("#order").modal('show');
+        $("#price,#qty").keyup(function () {
+                                                    $('#output').val($('#price').val() * $('#qty').val());
+                                                });
     });
 </script>
+  <script>
+      function onkeyupsum() { // calculate sum and show in textbox
+        var multiply = 1,
+            amount = document.querySelectorAll('.amount'), i;
+        for (i = 0; i < amount.length; i++) {
+            multiply *= parseFloat(amount[i].value || 1);
+        }
+        document.submitform.tamt.value = multiply;
+        }
+  </script>
   <script src="/static/js/hs.select2.js"></script>
   <script src="/static/vendor/select2/dist/js/select2.full.min.js"></script>
   <script>
@@ -1737,26 +1556,65 @@ function mysearchFunction() {
                     }
       </script>
   <script src="/static/vendor/hs-add-field/dist/hs-add-field.min.js"></script>
-  <!-- IE Support -->
-  	$(document).ready(function() {
-			$('.minus').click(function () {
-				var $input = $(this).parent().find('input');
-				var count = parseInt($input.val()) - 1;
-				count = count < 1 ? 1 : count;
-				$input.val(count);
-				$input.change();
-				return false;
-			});
-			$('.plus').click(function () {
-				var $input = $(this).parent().find('input');
-				$input.val(parseInt($input.val()) + 1);
-				$input.change();
-				return false;
-			});
-		});
 
+<script>
+    jQuery(document).ready(function(){
+    // This button will increment the value
+    $('[data-quantity="plus"]').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = $(this).attr('data-field');
+        // Get its current value
+        var currentVal = parseInt($('input[name='+fieldName+']').val());
+        // If is not undefined
+        {% if BBC %}
+        var x = {{ BBC[0][8] }}
+        {% else %}
+        var x = 0
+        {% endif %}
+        if (!isNaN(currentVal) ) {
+            // Increment
+            $('input[name='+fieldName+']').val((currentVal + x));
+        } else {
+            // Otherwise put a 0 there
+            $('input[name='+fieldName+']').val(0);
+        }
+    });
+    // This button will decrement the value till 0
+    $('[data-quantity="minus"]').click(function(e) {
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = $(this).attr('data-field');
+        // Get its current value
+        var currentVal = parseInt($('input[name='+fieldName+']').val());
+        {% if BBC %}
+        var x = {{ BBC[0][8] }}
+        {% else %}
+        var x = 0
+        {% endif %}
+        // If it isn't undefined or its greater than 0
+        if (!isNaN(currentVal) && currentVal > 0) {
+            // Decrement one
+            $('input[name='+fieldName+']').val(currentVal - x);
+        } else {
+            // Otherwise put a 0 there
+            $('input[name='+fieldName+']').val(0);
+
+        }
+    });
+});
+
+
+</script>
   <script>
     if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="/static/vendor/babel-polyfill/dist/polyfill.min.js"><\/script>');
   </script>
+  {% if order %}
+    <script>
+    document.getElementById("output").defaultValue = {{ BBC[0][8] | int * BBC[0][6] | int }};
+    </script>
+  {% endif %}
 </body>
 </html>
