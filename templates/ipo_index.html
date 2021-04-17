@@ -65,6 +65,17 @@
 
 
     </style>
+    <style>
+        input[type="number"] {
+                                  -webkit-appearance: textfield;
+                                     -moz-appearance: textfield;
+                                          appearance: textfield;
+                              }
+                                input[type=number]::-webkit-inner-spin-button,
+                                input[type=number]::-webkit-outer-spin-button {
+                                  -webkit-appearance: none;
+                                }
+    </style>
 </head>
 <body>
   <!-- ========== HEADER ========== -->
@@ -287,13 +298,13 @@
                     <div class="bg-white border rounded py-2 px-3">
                       <div class="js-quantity-counter row align-items-center">
                         <div class="col-7">
-                          <input class="form-control h-auto border-0 rounded p-0" type="text" name="quantity" id="qty" value="{{ BBC[0][8] }}" min="{{ BBC[0][8] }}" style="text-align:right;">
+                          <input class="form-control h-auto border-0 rounded p-0" type="number" name="qty" id="qty" step="{{ BBC[0][8] }}" value="{{ BBC[0][8] }}" min="{{ BBC[0][8] }}" style="text-align:right;">
                         </div>
                         <div class="col-5 text-right">
-                          <a class="js-minus btn btn-xs btn-icon btn-outline-secondary rounded-circle" data-quantity="minus" data-field="quantity" >
+                          <a class="js-minus btn btn-xs btn-icon btn-outline-secondary rounded-circle" data-quantity="minus" data-field="qty" >
                             <i class="fas fa-minus"></i>
                           </a>
-                          <a class="js-plus btn btn-xs btn-icon btn-outline-secondary rounded-circle"  data-quantity="plus" data-field="quantity" >
+                          <a class="js-plus btn btn-xs btn-icon btn-outline-secondary rounded-circle"  data-quantity="plus" data-field="qty" >
                             <i class="fas fa-plus"></i>
                           </a>
                         </div>
@@ -307,7 +318,7 @@
 
               <div class="col-sm-6" style="padding-top:10px;padding-left:15px;padding-right:22px;">
 
-                <input type="number" class="form-control input-group-field" name="price" id="price" placeholder="Enter the price" aria-label="Email address" min="{{BBC[0][6]}}" max="{{BBC[0][7]}}" style="text-align:center;" value="{{ BBC[0][6] }}">
+                <input type="number" class="form-control input-group-field" name="price" id="price" step="{{ BBC[0][13] }}" placeholder="Enter the price" aria-label="Email address" min="{{BBC[0][6]}}" max="{{BBC[0][7]}}" style="text-align:center;" value="{{ BBC[0][6] }}">
                 <!-- Container For Input Field -->
               </div>
 
@@ -1511,6 +1522,7 @@ function mysearchFunction() {
         $("#order").modal('show');
         $("#price,#qty").keyup(function () {
                                                     $('#output').val($('#price').val() * $('#qty').val());
+                                                    console.log($('#output').val());
                                                 });
     });
 </script>
@@ -1567,6 +1579,8 @@ function mysearchFunction() {
         fieldName = $(this).attr('data-field');
         // Get its current value
         var currentVal = parseInt($('input[name='+fieldName+']').val());
+        var pric = parseInt($('#price').val());
+        console.log(pric);
         // If is not undefined
         {% if BBC %}
         var x = {{ BBC[0][8] }}
@@ -1576,6 +1590,9 @@ function mysearchFunction() {
         if (!isNaN(currentVal) ) {
             // Increment
             $('input[name='+fieldName+']').val((currentVal + x));
+            $('#output').val((currentVal + x)*pric);
+            console.log((currentVal + x)*pric);
+
         } else {
             // Otherwise put a 0 there
             $('input[name='+fieldName+']').val(0);
@@ -1587,6 +1604,7 @@ function mysearchFunction() {
         e.preventDefault();
         // Get the field name
         fieldName = $(this).attr('data-field');
+        var pric = parseInt($('#price').val());
         // Get its current value
         var currentVal = parseInt($('input[name='+fieldName+']').val());
         {% if BBC %}
@@ -1598,6 +1616,7 @@ function mysearchFunction() {
         if (!isNaN(currentVal) && currentVal > 0) {
             // Decrement one
             $('input[name='+fieldName+']').val(currentVal - x);
+            $('#output').val((currentVal - x)*pric);
         } else {
             // Otherwise put a 0 there
             $('input[name='+fieldName+']').val(0);
