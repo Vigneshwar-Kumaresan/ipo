@@ -326,6 +326,27 @@ def resendotp():
             ipo_close = BB.loc[BB[10] == 'closed']
             return render_template('ipo_index.html',BB=BB.values.tolist(), DLST=DLST.values.tolist(),TAKEOVER=TAKEOVER.values.tolist(), ipo_up=len(ipo_up),ipo_close=ipo_close.values.tolist(),uid=session["otname"],clientcode=uid,name=session["otname"])
 
+@app.route('/wrong_otp', methods=['POST', 'GET'])
+def wrong_otp():
+    if request.method == 'POST' or request.method == 'GET':
+            uid =session["cid"]
+
+            # Lgtm is the first login time which record as cookie in user's system
+            lgtm = datetime.datetime.now()
+            session["slgtm"] = lgtm
+
+            mycursor.execute("SELECT * FROM ipo")
+            data = mycursor.fetchall()
+            df_data = pd.DataFrame(data)
+
+            df_data_filter = df_data[(df_data[2] == 'IND') & (df_data[9] == '1')]
+            BB = df_data_filter.loc[df_data_filter[3] == 'BB']
+            DLST = df_data_filter.loc[df_data_filter[3] == 'DLST']
+            TAKEOVER = df_data_filter.loc[df_data_filter[3] == 'TAKEOVER']
+            ipo_up = BB.loc[BB[10] == 'open']
+            ipo_close = BB.loc[BB[10] == 'closed']
+            return render_template('ipo_index.html',BB=BB.values.tolist(), DLST=DLST.values.tolist(),TAKEOVER=TAKEOVER.values.tolist(), ipo_up=len(ipo_up),ipo_close=ipo_close.values.tolist(),uid=session["otname"],clientcode=uid,name=session["otname"])
+
 @app.route('/auth', methods=['POST', 'GET'])
 def auth():
     if request.method == "POST" :
@@ -354,7 +375,7 @@ def auth():
             result = "OTP is Wrong"
             print(result)
             flash("OTP is Wrong! Enter Valid OTP")
-            return redirect(url_for("resendotp"))
+            return redirect(url_for("wrong_otp"))
 
 @app.route('/ipo_index', methods=['POST', 'GET'])
 def ipo_index():
@@ -402,8 +423,21 @@ def scripts():
 
 @app.route('/order', methods=['POST', 'GET'])
 def order():
+
     script = request.args.get('invest_script')
     print(script)
+
+    dt = datetime.datetime.now()
+    d1 = datetime.datetime(2020, 5, 13, 10, 00, 00)
+    d2 = datetime.datetime(2020, 5, 13, 17, 00, 00)
+
+    x = dt.replace(microsecond=0)
+
+    if (x.time() < d1.time()) or (x.time() > d2.time()):
+        alow = "restrict"
+    else:
+        alow = "pass"
+    print(alow)
 
     email = request.cookies.get('userID')
     login = session["login_check"]
@@ -439,7 +473,7 @@ def order():
         print(BB)
     return render_template('ipo_index.html', BB=BB.values.tolist(), DLST=DLST.values.tolist(),
                            TAKEOVER=TAKEOVER.values.tolist(), ipo_up=len(ipo_up), ipo_close=ipo_close.values.tolist(),
-                           clientcode=email, uid=None, login=login, name=name, code=code, log=log, forgotup=None,order=order,BBC=BBC.values.tolist())
+                           clientcode=email, uid=None, login=login, name=name, code=code, log=log, forgotup=None,order=order,BBC=BBC.values.tolist(),alow=alow)
 
 
 @app.route('/admin_login/', methods=['GET', 'POST'])

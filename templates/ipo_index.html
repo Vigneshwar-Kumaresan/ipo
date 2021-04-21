@@ -76,6 +76,25 @@
                                   -webkit-appearance: none;
                                 }
     </style>
+    <style>
+        .bottom-sheet{
+              max-height: 100% !important;
+            }
+
+            .bottom-sheet .modal.content{
+              width: 60%;
+              margin: 0px auto
+            }
+        .no-drop {cursor: no-drop;}
+        .disable-select {
+                          -webkit-user-select: none;
+                          -moz-user-select: none;
+                          -ms-user-select: none;
+                          user-select: none;
+                        }
+ </style>
+
+
 </head>
 <body>
   <!-- ========== HEADER ========== -->
@@ -214,142 +233,180 @@
   <!-- ========== MAIN CONTENT ========== -->
   <main id="content" role="main">
       {% if order %}
+        <!-- Edit Card Modal -->
         <div class="modal fade" id="order" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <!-- Header -->
-      <div class="modal-top-cover bg-primary text-center">
-        <figure class="position-absolute right-0 bottom-0 left-0">
-          <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
-            <path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"/>
-          </svg>
-        </figure>
-
-        <div class="modal-close">
-          <button type="button" class="btn btn-icon btn-sm btn-ghost-light" data-dismiss="modal" aria-label="Close">
-            <svg width="16" height="16" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-              <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-      <!-- End Header -->
-
-      <div class="modal-top-cover-avatar">
-          <span class="avatar avatar-lg avatar-primary avatar-circle avatar-border-lg avatar-centered shadow-soft"><span class="avatar-initials">{{ BBC[0][0][0] }}</span></span>
-      </div>
-
-      <!-- Body -->
-      <div class="modal-body pt-3 pb-sm-5 px-sm-5">
-        <div class="text-center mb-5">
-          <h3 class="mb-1">{{ BBC[0][1] }}</h3>
-          <span class="d-block">{{ BBC[0][0] }}</span>
-        </div>
-
-        <div class="row mb-6">
-          <div class="col-md-4 mb-3 mb-md-0">
-            <small class="text-cap">Lot:</small>
-            <span class="text-dark">{{ BBC[0][8] }}</span>
-          </div>
-
-          <div class="col-md-4 mb-3 mb-md-0">
-            <small class="text-cap">Price:</small>
-            <span class="text-dark">{{ BBC[0][6] }} - {{ BBC[0][7] }}</span>
-          </div>
-
-          <div class="col-md-4">
-            <small class="text-cap">Expiry:</small>
-            <div class="d-flex align-items-center">
-              <span class="text-dark">{{ BBC[0][4].strftime('%d %b, %y') }}  -  {{ BBC[0][5].strftime('%d %b, %y') }}</span>
-            </div>
-          </div>
-        </div>
-
-        <small class="text-cap mb-2">Summary</small>
-
-            <!-- Form Group -->
-            <div class="js-add-field row form-group"
-                 data-hs-add-field-options='{
-                    "template": "#addEmailFieldTemplate",
-                    "container": "#addEmailFieldContainer",
-                    "defaultCreated": 0
-                  }'>
-              <label for="qty" class="col-sm-6 col-form-label input-label">Qty</label>
-
-              <div class="number col-sm-6">
-                  <!-- Change the `data-field` of buttons and `name` of input field's for multiple plus minus buttons-->
-                    <!-- <div class="input-group plus-minus-input">
-
-                      <input class="form-control input-group-field" type="number" name="quantity" id="qty" value="{{ BBC[0][8] }}" min="{{ BBC[0][8] }}">
-                        <div class="input-group-button">
-                        <button type="button" class="btn btn-xs btn-icon btn-outline-secondary rounded-circle" data-quantity="minus" data-field="quantity" style="margin-left:-80px;">
-                          <i class="fas fa-minus" aria-hidden="true"></i>
-                        </button>
-                      </div>
-                        <div class="input-group-button">
-                        <button type="button" class="btn btn-xs btn-icon btn-outline-secondary rounded-circle" data-quantity="plus" data-field="quantity" style="margin-left:-50px;">
-                          <i class="fas fa-plus" aria-hidden="true"></i>
-                        </button>
-                      </div>
-                    </div>
-                    -->
-                  <!-- Quantity Counter -->
-                    <!-- Quantity -->
-                    <div class="bg-white border rounded py-2 px-3">
-                      <div class="js-quantity-counter row align-items-center">
-                        <div class="col-7">
-                          <input class="form-control h-auto border-0 rounded p-0" type="number" name="qty" id="qty" step="{{ BBC[0][8] }}" value="{{ BBC[0][8] }}" min="{{ BBC[0][8] }}" style="text-align:right;">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <!-- Body -->
+              <div class="modal-body" style="padding-top:40px;" >
+                  <div class="avatar avatar-xxl avatar-circle avatar-border-lg profile-cover-avatar" style="margin-left: auto;margin-right: auto;">
+                            <img class="avatar-img" src="static/zlogo/scripts/{{ BBC[0][0] }}.jpg" alt="Image Description">
+                          </div>
+                   <span class="card-title h5" style="text-align:center;">{{ BBC[0][1] }}</span>
+                  <hr>
+                <form>
+                    {%  if alow != 'restrict' %}
+                        <div class="alert alert-soft-dark media align-items-baseline mb-0" role="alert">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            <div class="media-body" style="font-size:13px;">IPO window will remain open from 10 AM till 5 PM. Please use your UPI for placing bids.</div>
                         </div>
-                        <div class="col-5 text-right">
-                          <a class="js-minus btn btn-xs btn-icon btn-outline-secondary rounded-circle" data-quantity="minus" data-field="qty" >
-                            <i class="fas fa-minus"></i>
-                          </a>
-                          <a class="js-plus btn btn-xs btn-icon btn-outline-secondary rounded-circle"  data-quantity="plus" data-field="qty" >
-                            <i class="fas fa-plus"></i>
-                          </a>
-                        </div>
+                    {% endif %}
+
+                    <div class="row" style="padding-top:20px;">
+                    <div class="col-sm-6">
+                      <!-- Form Group -->
+                      <div class="form-group">
+                          <small class="text-cap mb-2">Quantity <span class="badge badge-soft-primary">{{ BBC[0][8] }}</span></small>
+                         <!-- Quantity -->
+                            <div class="bg-white border rounded py-2 px-3" style="height:52px;">
+                              <div class="js-quantity-counter row align-items-center">
+                                <div class="col-7">
+                                  <input class="form-control h-auto border-0 rounded p-0" type="number" name="qty" id="qty" step="{{ BBC[0][8] }}" value="{{ BBC[0][8] }}" min="{{ BBC[0][8] }}">
+                                </div>
+                                <div class="col-5 text-right">
+                                  <a class="js-minus btn btn-xs btn-icon btn-outline-secondary rounded-circle" data-quantity="minus" data-field="qty" >
+                                    <i class="fas fa-minus"></i>
+                                  </a>
+                                  <a class="js-plus btn btn-xs btn-icon btn-outline-secondary rounded-circle"  data-quantity="plus" data-field="qty" >
+                                    <i class="fas fa-plus"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Quantity -->
                       </div>
+                      <!-- End Form Group -->
                     </div>
-                    <!-- End Quantity -->
-                    <!-- End Quantity Counter -->
 
-              </div>
-                <label for="price" class="col-sm-6 col-form-label input-label mt-2">Price</label>
+                    <div class="col-sm-6">
+                      <!-- Form Group -->
+                      <div class="form-group">
+                          <small class="text-cap mb-2">Price <span class="badge badge-soft-primary">&#x20B9; {{ BBC[0][6] }} - &#x20B9; {{ BBC[0][7] }} </span></small>
+                          <input type="number" class="form-control input-group-field" name="price" id="price" step="{{ BBC[0][13] }}" placeholder="Enter the price" aria-label="Email address" min="{{BBC[0][6]}}" max="{{BBC[0][7]}}" style="display:block;" value="{{ BBC[0][6] }}">
+                          <input type="text" class="form-control input-group-field no-drop" name="pricecutt" id="pricecutt" style="display:none;padding-top:5%;" value="{{ BBC[0][7] }}" readonly/>
 
-              <div class="col-sm-6" style="padding-top:10px;padding-left:15px;padding-right:22px;">
 
-                <input type="number" class="form-control input-group-field" name="price" id="price" step="{{ BBC[0][13] }}" placeholder="Enter the price" aria-label="Email address" min="{{BBC[0][6]}}" max="{{BBC[0][7]}}" style="text-align:center;display:block;" value="{{ BBC[0][6] }}">
-                <!-- Container For Input Field -->
-              </div>
+                          <div class="" style="padding-top:5px;">
+                                <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
+                                  <input type="checkbox" class="custom-control-input" id="cutoff" name="cutoff" onclick="cutoffcheck()"/>
+                                  <label class="custom-control-label" for="cutoff">
+                                    <small>
+                                       <strong>CUT-OFF</strong>
+                                    </small>
+                                  </label>
+                                </div>
+                          </div>
+                      </div>
 
-            </div>
-            <!-- End Form Group -->
 
-            <!-- Add Phone Input Field -->
-            <div id="addEmailFieldTemplate" style="display: none;">
-              <div class="input-group-add-field">
-                <input type="email" class="form-control" data-name="addressLine" placeholder="Email address" aria-label="Email address">
 
-                <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
-                  <i class="fas fa-times"></i>
-                </a>
-              </div>
-            </div>
-            <!-- End Add Phone Input Field -->
+                      <!-- End Form Group -->
+                    </div>
 
-        <div class="d-flex justify-content-between align-items-center">
-              <strong></strong>
-              <strong><input type="checkbox" name="cutoff" id="cutoff" onclick="cutoffcheck()" value="check"/> Cut-Off</strong>
-        </div>
+                  </div>
+                  <!-- Form Group -->
+                  <div class="">
+                      <div style="padding-bottom:10px;">
+                      <small class="mb-2"><strong>ENTER THE UPI</strong> <span class="badge badge-soft-primary" id="upiwri"></span></small>
+                      </div>
 
-        <hr class="my-5">
+                      <!--
+                    <div class="wrapper">
+                      <input type="text" class="form-control" placeholder="Enter UPI Id" data-name="input" required="" name="input_0" style=""/>
+                      <select class="custom-select" data-name="select" name="select_0" size="1" style="">
+                        <option value="@upi">@upi</option>
+                        <option value="@okaxis">@okaxis</option>
+                        <option value="@okhdfcbank">@okhdfcbank</option>
+                        <option value="@okicici">@okicici</option>
+                        <option value="@oksbi">@oksbi</option>
+                        <option value="@ybl">@ybl</option>
+                        <option value="@upu">@upu</option>
+                        <option value="@BARODAMPAY">@BARODAMPAY</option>
+                        <option value="@obc">@obc</option>
+                        <option value="@rbl">@rbl</option>
+                        <option value="@allbank">@allbank</option>
+                        <option value="@axisbank">@axisbank </option>
+                        <option value="@indus">@indus</option>
+                        <option value="@federal">@federal</option>
+                        <option value="@sbi">@sbi</option>
+                        <option value="@yesbank">@yesbank</option>
+                        <option value="@citi">@citi</option>
+                        <option value="@citigold">@citigold</option>
+                        <option value="@hsbc">@hsbc</option>
+                        <option value="@icici">@icici</option>
+                        <option value="@kotak">@kotak</option>
+                        <option value="@sib">@sib</option>
+                      </select>
+                    </div>
+                  </div>
+                   -->
+                      <div class="input-group">
+                              <input type="text" class="form-control"  id="upi" oninput="upiwrite()" placeholder="Enter UPI">
 
-          <button class="p btn btn-primary btn-block"><span style="margin-left:10px;text-align:center;">Invest  &#x20B9;<input id="output" style="background-color: #377DFF;color:#ffffff;border: 0px none;font-weight: bold; text-align:center;" size="6" readonly></span></button>
-      </div>
-      <!-- End Body -->
-    </div>
-  </div>
+                              <div class="input-group-append">
+                                <select class="js-select2-custom custom-select" style="width: 100%;" size="1" style="opacity: 0;"
+                                        data-hs-select2-options='{
+                                          "minimumResultsForSearch": "Infinity",
+                                          "width": "100px"
+                                        }' id="upibank" oninput="upiselect()">
+                                  <option value="@upi">@upi</option>
+                        <option value="@okaxis">@okaxis</option>
+                        <option value="@okhdfcbank">@okhdfcbank</option>
+                        <option value="@okicici">@okicici</option>
+                        <option value="@oksbi">@oksbi</option>
+                        <option value="@ybl">@ybl</option>
+                        <option value="@upu">@upu</option>
+                        <option value="@BARODAMPAY">@BARODAMPAY</option>
+                        <option value="@obc">@obc</option>
+                        <option value="@rbl">@rbl</option>
+                        <option value="@allbank">@allbank</option>
+                        <option value="@axisbank">@axisbank </option>
+                        <option value="@indus">@indus</option>
+                        <option value="@federal">@federal</option>
+                        <option value="@sbi">@sbi</option>
+                        <option value="@yesbank">@yesbank</option>
+                        <option value="@citi">@citi</option>
+                        <option value="@citigold">@citigold</option>
+                        <option value="@hsbc">@hsbc</option>
+                        <option value="@icici">@icici</option>
+                        <option value="@kotak">@kotak</option>
+                        <option value="@sib">@sib</option>
+                                </select>
+                              </div>
+                      </div>
+                    <p class="text-muted" style="padding-top:10px;font-size:13px;" align="justify">Please check your UPI 2.0 supported app for the mandate request and accept it.</p>
+
+                <div class="">
+                    <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
+                      <input type="checkbox" class="custom-control-input" id="termsCheckbox" name="termsCheckbox" required
+                             data-msg="Please accept our Terms and Conditions.">
+                      <label class="custom-control-label" for="termsCheckbox">
+                        <small>
+                            <p align="justify">I hereby undertake that, I have read the Red Herring Prospectus and I am an eligible UPI bidder as per the applicable provisions of the SEBI (Issue of capital and Disclosure Requirement) Regulation, 2009.</p>
+                        </small>
+                      </label>
+                    </div>
+                </div>
+
+
 </div>
+
+
+                  <div class="d-flex justify-content-end"  style="padding-top:20px;">
+                    {% if alow != 'restrict' %}
+                      <button class="p btn btn-primary btn-block" disabled><span style="margin-left:10px;text-align:center;">Invest</span></button>
+                    {% else %}
+                        <button class="p btn btn-primary btn-block"><span style="margin-left:10px;text-align:center;">Invest  &#x20B9;<input id="output" style="background-color: #377DFF;color:#ffffff;border: 0px none;font-weight: bold; text-align:center;" size="6" readonly></span></button>
+                    {% endif %}
+                  </div>
+
+                </form>
+              </div>
+              <!-- End Body -->
+            </div>
+          </div>
+        </div>
+        <!-- End Edit Card Modal -->
       {% endif %}
       {% if Forgotcc %}
             <div id="Forgotcc" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -560,7 +617,7 @@
                         </div>
 
                         <div class="modal-body">
-                            <form class="js-validate" method="post">
+                            <form id="otp" class="js-validate" method="post" action="/auth" onload="loaderu">
                 <div class="text-center">
 
 
@@ -611,8 +668,10 @@
                   {% endif %}
                 {% endwith %}
 
-                  <button type="submit" class="btn btn-lg btn-block btn-primary" formaction="/auth" onclick="this.classList.toggle('button--loading')">
-                    <span class="button__text">Verify my account</span>
+                  <button type="submit" class="button btn btn-lg btn-block btn-primary" formaction="/auth" onclick="this.classList.toggle('button--loading')" id="buttonae">
+
+
+                      <span class="button__text">Verify my account</span>
                   </button>
 
                   <div class="text-center mt-3">
@@ -656,16 +715,10 @@
               {% if ipo_up == None %}
               <h3 class="mb-0">Initial Public Offering (0)</h3>
               {% else %}
-              <h3 class="mb-0">Initial Public Offering ({{ ipo_up }})</h3>
+              <h3 class="disable-select mb-0">Initial Public Offering ({{ ipo_up }})</h3>
               {% endif %}
             </div>
 
-            <div class="col-sm-auto">
-              <div class="d-flex align-items-center">
-
-
-              </div>
-            </div>
           </div>
           <!-- End Title and Sort -->
 
@@ -1209,7 +1262,6 @@
 
 
 
-
   <!-- Go to Top -->
   <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
      data-hs-go-to-options='{
@@ -1537,6 +1589,8 @@ function mysearchFunction() {
                 $('#output').val($('#price').val() * $('#qty').val());
             }
             })
+
+
     });
 </script>
   <script>
@@ -1563,7 +1617,9 @@ function mysearchFunction() {
                          } else {
                             getCodeBoxElement(index).blur();
                             // Submit code
-                            console.log('submit code ');
+                            document.getElementById("otp").submit();
+                            const buttonae = document.getElementById("buttonae");
+                            buttonae.click();
                          }
                       }
                       if (eventCode === 8 && index !== 1) {
@@ -1665,11 +1721,13 @@ function mysearchFunction() {
           if (checkBox.checked == true){
 
             document.getElementById("price").style.display = "none";
+            document.getElementById("pricecutt").style.display = "block";
             document.getElementById("output").defaultValue = qty * 10;
 
           } else {
 
              document.getElementById("price").style.display = "block";
+             document.getElementById("pricecutt").style.display = "none";
              document.getElementById("output").defaultValue = qty * text;
 
           }
@@ -1677,12 +1735,87 @@ function mysearchFunction() {
 </script>
 
   <script>
+      $('.modal').modal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: .5, // Opacity of modal background
+      inDuration: 300, // Transition in duration
+      outDuration: 200, // Transition out duration
+      startingTop: '4%', // Starting top style attribute
+      endingTop: '10%', // Ending top style attribute
+      ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+      //  alert("Ready");
+        console.log(modal, trigger);
+      },
+      complete: function() { //alert('Closed');
+      } // Callback for Modal close
+    }
+  );
+  </script>
+
+
+<div class="modal fade" id="myModalBottom" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-bottom">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body p-4">
+    	       <ul class="list-unstyled">
+                    <li class="media">
+                        <img class="d-flex mr-3" style="background-color:#ccc;width:72px;height:72px" alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">List-based media object</h5>
+                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </li>
+                    <li class="media my-4">
+                        <img class="d-flex mr-3" style="background-color:#ccc;width:72px;height:72px" alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">List-based media object</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </li>
+                    <li class="media">
+                        <img class="d-flex mr-3"  style="background-color:#ccc;width:72px;height:72px" alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">List-based media object</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">I Agree</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  <script>
     if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="/static/vendor/babel-polyfill/dist/polyfill.min.js"><\/script>');
   </script>
   {% if order %}
-    <script>
-    document.getElementById("output").defaultValue = {{ BBC[0][8] | int * BBC[0][6] | int }};
-    </script>
+        <script>
+        document.getElementById("output").defaultValue = {{ BBC[0][8] | int * BBC[0][6] | int }};
+        </script>
   {% endif %}
+
+    <script>
+        function upiwrite() {
+          var x = document.getElementById("upi").value;
+          var y = document.getElementById("upibank").value;
+          document.getElementById("upiwri").innerHTML = x+y;
+        }
+        function upiselect() {
+          var x = document.getElementById("upi").value;
+          var y = document.getElementById("upibank").value;
+          document.getElementById("upiwri").innerHTML = x+y;
+        }
+    </script>
 </body>
 </html>
