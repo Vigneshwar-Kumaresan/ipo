@@ -12,6 +12,14 @@ import pandas as pd
 UPLOAD_FOLDER = '/static/zlogo/scripts'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
+company= 'zebutrade'
+zebutrade_membercode='6550'
+zebutrade_loginid='ZEBUIPO'
+zebutrade_password='BSe@263546678'
+zebutrade_ibbsid='FTXMB0Q947'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+
+
 app = Flask(__name__)
 @app.errorhandler(404)
 def not_found(e):
@@ -121,6 +129,18 @@ def sendotp(a):
     sess.quit()
     print('Mail Sent')
     """
+
+def ApplicationNo():
+    mycursor.execute("""select app_no from application  ORDER BY app_no DESC LIMIT 1;""")
+    data = mycursor.fetchall()
+    app_no = data[0][0] + 1
+    clientcode = session["cid"]
+    mycursor.execute("""INSERT INTO application (app_no,c_code)
+                        VALUES (%s,'%s')""" % (app_no,clientcode))
+    mydb.commit()
+    genapp= clientcode+str(app_no)
+    print(genapp)
+    return genapp
 
 
 
@@ -412,7 +432,6 @@ def ipo_index():
 
         return render_template('ipo_index.html', BB=None, DLST=None, TAKEOVER=None, ipo_up=None, ipo_close=None,clientcode=email,uid=None)
 
-
 @app.route('/scripts', methods=['POST', 'GET'])
 def scripts():
     name = request.args.get('name')
@@ -475,6 +494,89 @@ def order():
                            TAKEOVER=TAKEOVER.values.tolist(), ipo_up=len(ipo_up), ipo_close=ipo_close.values.tolist(),
                            clientcode=email, uid=None, login=login, name=name, code=code, log=log, forgotup=None,order=order,BBC=BBC.values.tolist(),alow=alow)
 
+@app.route('/order_place', methods=['POST', 'GET'])
+def order_place():
+    uid = session["cid"]
+    symbol = request.args.get('symbol')
+    qty = request.args.get('qty')
+    ratep = request.args.get('pricecutt')
+    cutoof = request.args.get('cutoff')
+    upi = request.args.get('upi')
+    upibank = request.args.get('upibank')
+    upi_id=upi+upibank
+
+    print(uid,symbol,qty,ratep,cutoof)
+
+    urls = "http://bo.zebull.in:8505/staticdata/wsdl/JSON_KYC.cfm?Username=api&password=api@54321&Client_code=" + uid
+    file = urllib.request.urlopen(urls)
+    for line in file:
+        decoded_line = line.decode("utf-8")
+    if decoded_line == "no data found":
+        result = False
+    else:
+        result = True
+        responses = requests.get(urls)
+        a = responses.json()['COLUMNS']
+        b = responses.json()['DATA']
+    name = b[0][2]
+    pan = b[0][8]
+    dpid = b[0][12]
+    typer = ""
+    scripid = symbol  # "LODHA" get
+    category = "ind"
+    applicantname = name
+    depository = "cdsl"
+    panno = pan
+    accountnumber_upiid = upi_id # get
+    bidid = ""
+    quantity = qty  # '30' get
+    rate = ratep  # '486.00' get
+    cuttoffflag = "1"
+    orderno = "1234"
+    actioncode = "n"
+    clientbenfid = dpid
+    dpid = "0"
+    flagTemp = 0
+    applicationno = ApplicationNo()
+
+    url = 'https://www.meon.space/ipo/IPO_ORDER_CHECKSUM'
+    headers = {
+        'Content-Type': 'application/json',
+        "User-Agent": USER_AGENT
+    }
+    payload = {'typer': typer, 'scripid': scripid, 'category': category, 'applicantname': applicantname,
+               'depository': depository, 'applicationno': applicationno,
+               'dpid': dpid, 'clientbenfid': clientbenfid, 'panno': panno, 'accountnumber_upiid': accountnumber_upiid,
+               'bidid': bidid, 'quantity': quantity, 'rate': rate, 'cuttoffflag': cuttoffflag,
+               'orderno': orderno, 'actioncode': actioncode, 'company': company, 'membercode': zebutrade_membercode,
+               'loginid': zebutrade_loginid, 'password': zebutrade_password, 'ibbsid': zebutrade_ibbsid}
+
+    response = requests.post(url=url, headers=headers, data=json.dumps(payload), verify=False)
+    checksum = response.json()['checksum']
+    data_json = response.json()['data_json']
+    url = 'https://ibbs.bseindia.com/ibbsmsgapi/iBBSWebBroadcastApi.svc/v1/login'
+    body = {"membercode": zebutrade_membercode, "loginid": zebutrade_loginid,
+            "password": zebutrade_password, "ibbsid": zebutrade_ibbsid}
+    headers = {'content-type': 'application/json', "User-Agent": USER_AGENT}
+    r = requests.post(url, data=json.dumps(body), headers=headers, verify=False)
+    # print(r.text)
+    token = json.loads(r.text)['token']
+    headers = {
+        'Membercode': zebutrade_membercode,
+        'Login': zebutrade_loginid,
+        'Token': token,
+        'Content-Type': "application/json",
+        'Checksum': checksum,
+        "User-Agent": USER_AGENT
+    }
+
+    response = requests.request("POST", "https://ibbs.bseindia.com/ibbsapi/ibbsapiservice.svc/v1/ipoorder",
+                                data=data_json, headers=headers, verify=False)
+    resp=response.json()
+    flash(resp['bids'][0]['message'])
+    return redirect(url_for('ipo_index'))
+
+
 
 @app.route('/admin_login/', methods=['GET', 'POST'])
 def admin_login():
@@ -492,7 +594,6 @@ def ad_auth():
         else:
             return redirect(url_for("admin_login"))
 
-
 @app.route('/admin_index/', methods=['GET', 'POST'])
 def admin_index():
     mycursor.execute("SELECT * FROM ipo")
@@ -501,7 +602,6 @@ def admin_index():
     df_data_filter = df_data[(df_data[2] == 'IND') & (df_data[9] == '1')]
     BB = df_data_filter.loc[df_data_filter[3] == 'BB']
     return render_template('admin_index.html', df=df_data_filter.values.tolist())
-
 
 @app.route('/admin_edit_scripts', methods=['POST', 'GET'])
 def admin_edit_scripts():

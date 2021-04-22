@@ -239,24 +239,24 @@
             <div class="modal-content">
               <!-- Body -->
               <div class="modal-body" style="padding-top:40px;" >
-                  <div class="avatar avatar-xxl avatar-circle avatar-border-lg profile-cover-avatar" style="margin-left: auto;margin-right: auto;">
+                  <div class="disable-select avatar avatar-xxl avatar-circle avatar-border-lg profile-cover-avatar" style="margin-left: auto;margin-right: auto;">
                             <img class="avatar-img" src="static/zlogo/scripts/{{ BBC[0][0] }}.jpg" alt="Image Description">
                           </div>
-                   <span class="card-title h5" style="text-align:center;">{{ BBC[0][1] }}</span>
+                   <span class="card-title h5 disable-select" style="text-align:center;">{{ BBC[0][1] }}</span>
                   <hr>
                 <form>
-                    {%  if alow != 'restrict' %}
+                    {%  if alow == 'restrict' %}
                         <div class="alert alert-soft-dark media align-items-baseline mb-0" role="alert">
                             <i class="fas fa-info-circle mr-2"></i>
                             <div class="media-body" style="font-size:13px;">IPO window will remain open from 10 AM till 5 PM. Please use your UPI for placing bids.</div>
                         </div>
                     {% endif %}
-
+                    <input type="hidden" name="symbol" id="symbol" value="{{ BBC[0][0] }}">
                     <div class="row" style="padding-top:20px;">
                     <div class="col-sm-6">
                       <!-- Form Group -->
                       <div class="form-group">
-                          <small class="text-cap mb-2">Quantity <span class="badge badge-soft-primary">{{ BBC[0][8] }}</span></small>
+                          <small class="disable-select text-cap mb-2">Quantity <span class="badge badge-soft-primary">{{ BBC[0][8] }}</span></small>
                          <!-- Quantity -->
                             <div class="bg-white border rounded py-2 px-3" style="height:52px;">
                               <div class="js-quantity-counter row align-items-center">
@@ -281,15 +281,14 @@
                     <div class="col-sm-6">
                       <!-- Form Group -->
                       <div class="form-group">
-                          <small class="text-cap mb-2">Price <span class="badge badge-soft-primary">&#x20B9; {{ BBC[0][6] }} - &#x20B9; {{ BBC[0][7] }} </span></small>
+                          <small class="disable-select text-cap mb-2">Price <span class="badge badge-soft-primary">&#x20B9; {{ BBC[0][6] }} - &#x20B9; {{ BBC[0][7] }} </span></small>
                           <input type="number" class="form-control input-group-field" name="price" id="price" step="{{ BBC[0][13] }}" placeholder="Enter the price" aria-label="Email address" min="{{BBC[0][6]}}" max="{{BBC[0][7]}}" style="display:block;" value="{{ BBC[0][6] }}">
                           <input type="text" class="form-control input-group-field no-drop" name="pricecutt" id="pricecutt" style="display:none;padding-top:5%;" value="{{ BBC[0][7] }}" readonly/>
-
 
                           <div class="" style="padding-top:5px;">
                                 <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
                                   <input type="checkbox" class="custom-control-input" id="cutoff" name="cutoff" onclick="cutoffcheck()"/>
-                                  <label class="custom-control-label" for="cutoff">
+                                  <label class="disable-select custom-control-label" for="cutoff">
                                     <small>
                                        <strong>CUT-OFF</strong>
                                     </small>
@@ -307,7 +306,7 @@
                   <!-- Form Group -->
                   <div class="">
                       <div style="padding-bottom:10px;">
-                      <small class="mb-2"><strong>ENTER THE UPI</strong> <span class="badge badge-soft-primary" id="upiwri"></span></small>
+                      <small class="disable-select mb-2"><strong>ENTER THE UPI</strong> <span class="badge badge-soft-primary" id="upiwri"></span></small>
                       </div>
 
                       <!--
@@ -341,14 +340,14 @@
                   </div>
                    -->
                       <div class="input-group">
-                              <input type="text" class="form-control"  id="upi" oninput="upiwrite()" placeholder="Enter UPI">
+                              <input type="text" class="form-control"  name="upi" id="upi" oninput="upiwrite()" placeholder="Enter UPI">
 
                               <div class="input-group-append">
                                 <select class="js-select2-custom custom-select" style="width: 100%;" size="1" style="opacity: 0;"
                                         data-hs-select2-options='{
                                           "minimumResultsForSearch": "Infinity",
                                           "width": "100px"
-                                        }' id="upibank" oninput="upiselect()">
+                                        }' id="upibank" name="upibank" oninput="upiselect()">
                                   <option value="@upi">@upi</option>
                         <option value="@okaxis">@okaxis</option>
                         <option value="@okhdfcbank">@okhdfcbank</option>
@@ -374,12 +373,13 @@
                                 </select>
                               </div>
                       </div>
-                    <p class="text-muted" style="padding-top:10px;font-size:13px;" align="justify">Please check your UPI 2.0 supported app for the mandate request and accept it.</p>
-
+                    <p class="disable-select text-muted" style="padding-top:10px;font-size:13px;" align="justify">Please check your UPI 2.0 supported app for the mandate request and accept it.</p>
+                    <p id="infoout" style="display:none;font-size:13px;color:red;text-align:center;">Your total ammout has reached more than limit(200000)</p>
                 <div class="">
-                    <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
+                    <div class="disable-select custom-control custom-checkbox d-flex align-items-center text-muted">
                       <input type="checkbox" class="custom-control-input" id="termsCheckbox" name="termsCheckbox" required
-                             data-msg="Please accept our Terms and Conditions.">
+                             oninvalid="this.setCustomValidity('Please accept our Terms and Conditions')"
+                             oninput="this.setCustomValidity('')" >
                       <label class="custom-control-label" for="termsCheckbox">
                         <small>
                             <p align="justify">I hereby undertake that, I have read the Red Herring Prospectus and I am an eligible UPI bidder as per the applicable provisions of the SEBI (Issue of capital and Disclosure Requirement) Regulation, 2009.</p>
@@ -391,12 +391,13 @@
 
 </div>
 
+                    <p id="sudo" style="color:green;font-size:20px;"></p>
 
                   <div class="d-flex justify-content-end"  style="padding-top:20px;">
-                    {% if alow != 'restrict' %}
+                    {% if alow == 'restrict' %}
                       <button class="p btn btn-primary btn-block" disabled><span style="margin-left:10px;text-align:center;">Invest</span></button>
                     {% else %}
-                        <button class="p btn btn-primary btn-block"><span style="margin-left:10px;text-align:center;">Invest  &#x20B9;<input id="output" style="background-color: #377DFF;color:#ffffff;border: 0px none;font-weight: bold; text-align:center;" size="6" readonly></span></button>
+                        <button class="p btn btn-primary btn-block" formaction="/order_place"><span style="margin-left:10px;text-align:center;">Invest  &#x20B9;<input id="output" style="background-color: #377DFF;color:#ffffff;border: 0px none;font-weight: bold; text-align:center;" size="6" readonly></span></button>
                     {% endif %}
                   </div>
 
@@ -692,19 +693,35 @@
 
                     <div class="media align-items-center  py-5" style="padding:15px;">
 
-          <span class="avatar avatar-primary avatar-circle avatar-centered shadow-soft"><span class="avatar-initials">{{ name[0] }}</span></span>
+                        <span class="avatar avatar-primary avatar-circle avatar-centered shadow-soft"><span class="avatar-initials">{{ name[0] }}</span></span>
 
-        <div class="media-body ml-3">
-            <small class="d-block small font-weight-bold text-cap">Welcome</small>
-          <h3 class="mb-0">{{ name }} <span class="btn btn-xs btn-soft-primary font-weight-bold py-1 px-2 ml-1">{{ code }}</span></h3>
-
-        </div>
-      </div>
+                        <div class="media-body ml-3">
+                            <small class="d-block small font-weight-bold text-cap">Welcome</small>
+                            <h3 class="mb-0">{{ name }} <span class="btn btn-xs btn-soft-primary font-weight-bold py-1 px-2 ml-1">{{ code }}</span></h3>
+                        </div>
+                    </div>
 
                 </div>
       <!-- End Author -->
-    </div>
+            </div>
       {% endif %}
+      <div class="container" style="padding-top:20px;">
+
+            {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+
+                    {% for message in messages %}
+                      <div id="hideDiv" class="alert alert-warning alert-dismissible fade show" role="alert" >
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+            {% endwith %}
+      </div>
+
     <!-- Listing Section -->
       <div class="container space-1 space-bottom-lg-3">
       <div class="row">
@@ -1243,7 +1260,6 @@
 
 
 
-
   <!-- ========== FOOTER ========== -->
   <footer class="bg-dark" style="bottom: 0;width: 100%;left: 0;">
     <div class="container">
@@ -1572,23 +1588,64 @@ function mysearchFunction() {
         $("#Forgotcc").modal('show');
         $("#forgotup").modal('show');
         $("#order").modal('show');
+        {% if order%}
+                $("#price,#qty").keyup(function () {
+                                                        if ($('#cutoff').is(':checked')) {
+                                                            $('#output').val($('#qty').val() * {{ BBC[0][7] }});
+                                                            if($('#output').val() >= 200000 )
+                                                               {
+                                                                   console.log('Yaro');
+                                                                   $("#infoout").css("display", "block");
+                                                               }
+                                                               else
+                                                               {    console.log('Nano');
+                                                                    $("#infoout").css("display", "none");
+                                                               }
+                                                        } else {
+                                                            $('#output').val($('#price').val() * $('#qty').val());
+                                                            console.log($('#output').val());
+                                                            if($('#output').val() >= 200000 )
+                                                                   {
+                                                                       console.log('Yaro');
+                                                                       $("#infoout").css("display", "block");
+                                                                   }
+                                                                   else
+                                                                   {    console.log('Nano');
+                                                                        $("#infoout").css("display", "none");
+                                                                   }
+                                                            }
 
-        $("#price,#qty").keyup(function () {
-                                                if ($('#cutoff').is(':checked')) {
-                                                    $('#output').val($('#qty').val() * 10);
-                                                } else {
-                                                    $('#output').val($('#price').val() * $('#qty').val());
-                                                    console.log($('#output').val());
-                                                    }
+                                                       });
+                $('#cutoff').on('change', function () {
+                 if ($('#cutoff').is(':checked')) {
+                        $('#output').val($('#qty').val() * {{ BBC[0][7] }});
+                        if($('#output').val() >= 200000 )
+                               {
+                                   console.log('Yaro');
+                                   $("#infoout").css("display", "block");
+                               }
+                               else
+                               {    console.log('Nano');
+                                    $("#infoout").css("display", "none");
+                               }
+                    } else {
+                        $('#output').val($('#price').val() * $('#qty').val());
+                        if($('#output').val() >= 200000 )
+                               {
+                                   console.log('Yaro');
+                                   $("#infoout").css("display", "block");
+                               }
+                               else
+                               {    console.log('Nano');
+                                    $("#infoout").css("display", "none");
+                               }
+                    }
+                    })
+        {% endif %}
 
-                                               });
-        $('#cutoff').on('change', function () {
-         if ($('#cutoff').is(':checked')) {
-                $('#output').val($('#qty').val() * 10);
-            } else {
-                $('#output').val($('#price').val() * $('#qty').val());
-            }
-            })
+
+
+
 
 
     });
@@ -1656,20 +1713,42 @@ function mysearchFunction() {
         {% else %}
         var x = 0
         {% endif %}
-
+        {% if order %}
         if (!isNaN(currentVal) ) {
             // Increment
             if($("input:checkbox:checked").val() == 'check')
             {
                $('input[name='+fieldName+']').val((currentVal + x));
-               $('#output').val((currentVal + x)*10);
+               $('#output').val((currentVal + x)*{{ BBC[0][7] }});
+               console.log($('#output').val());
+               if($('#output').val() >= 200000 )
+               {
+                   console.log('Yaro');
+                   $("#infoout").css("display", "block");
+               }
+               else
+               {    console.log('Nano');
+                    $("#infoout").css("display", "none");
+               }
             }
             else
             {
                 $('input[name='+fieldName+']').val((currentVal + x));
                 $('#output').val((currentVal + x)*pric);
-                console.log((currentVal + x)*pric);
+
+                console.log('Ot:'+$('#output').val());
+                if($('#output').val() >= 200000 )
+               {
+                   console.log('Yaro');
+                   $("#infoout").css("display", "block");
+               }
+               else
+               {    console.log('Nano');
+                    $("#infoout").css("display", "none");
+               }
+
             }
+        {% endif %}
         } else {
             // Otherwise put a 0 there
             $('input[name='+fieldName+']').val(0);
@@ -1690,18 +1769,38 @@ function mysearchFunction() {
         var x = 0
         {% endif %}
         // If it isn't undefined or its greater than 0
+        {% if order %}
         if (!isNaN(currentVal) && currentVal > 0) {
             // Decrement one
             if($("input:checkbox:checked").val() == 'check')
             {
                $('input[name='+fieldName+']').val((currentVal - x));
-               $('#output').val((currentVal - x)*10);
+               $('#output').val((currentVal - x)*{{ BBC[0][7] }});
+               if($('#output').val() >= 200000 )
+               {
+                   console.log('Yaro');
+                   $("#infoout").css("display", "block");
+               }
+               else
+               {    console.log('Nano');
+                    $("#infoout").css("display", "none");
+               }
             }
             else
             {
                 $('input[name='+fieldName+']').val(currentVal - x);
                 $('#output').val((currentVal - x)*pric);
+                if($('#output').val() >= 200000 )
+               {
+
+                   $("#infoout").css("display", "block");
+               }
+               else
+               {
+                    $("#infoout").css("display", "none");
+               }
             }
+        {% endif %}
         } else {
             // Otherwise put a 0 there
             $('input[name='+fieldName+']').val(0);
@@ -1712,7 +1811,7 @@ function mysearchFunction() {
 
 
 </script>
-
+{% if order %}
   <script>
         function cutoffcheck() {
           var checkBox = document.getElementById("cutoff");
@@ -1722,7 +1821,13 @@ function mysearchFunction() {
 
             document.getElementById("price").style.display = "none";
             document.getElementById("pricecutt").style.display = "block";
-            document.getElementById("output").defaultValue = qty * 10;
+            document.getElementById("output").defaultValue = qty * {{ BBC[0][7] }};
+            if ( text > 200000 ){
+                                 document.getElementById("infoout").style.display = "block";
+                                 }
+            else {
+                    document.getElementById("infoout").style.display = "none";
+            }
 
           } else {
 
@@ -1733,7 +1838,7 @@ function mysearchFunction() {
           }
         }
 </script>
-
+{% endif %}
   <script>
       $('.modal').modal({
       dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -1817,5 +1922,22 @@ function mysearchFunction() {
           document.getElementById("upiwri").innerHTML = x+y;
         }
     </script>
+		<!-- Script to set Input Checkbox required Property -->
+		<script>
+			function submite() {
+				var g = document.getElementById("termsCheckbox").required
+						= "false";
+
+				document.getElementById("sudo").innerHTML
+						= "The value of the required attribute"
+						+ " was changed to " + g;
+			}
+		</script>
+<script>
+  $(function() {
+                    setTimeout(function() { $("#hideDiv").fadeOut(1500); }, 5000)
+                })
+</script>
+
 </body>
 </html>
