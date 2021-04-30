@@ -7,7 +7,7 @@
   <!-- Required Meta Tags Always Come First -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  <!-- <meta http-equiv="refresh" content="15" > -->
   <!-- Favicon -->
   <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="static/css/button.css">
@@ -212,7 +212,7 @@
                   {% else %}
 
                   <form action="/login">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" id="SignIn" name="SignIn" value="SignIn">
                       Sign In
                     </button>
                   </form>
@@ -231,7 +231,7 @@
   <!-- ========== END HEADER ========== -->
 
   <!-- ========== MAIN CONTENT ========== -->
-  <main id="content" role="main">
+  <main id="content" role="main" onload="update_values();">
       {% if order %}
         <!-- Edit Card Modal -->
         <div class="modal fade" id="order" tabindex="-1" role="dialog" aria-hidden="true">
@@ -394,11 +394,7 @@
                     <p id="sudo" style="color:green;font-size:20px;"></p>
 
                   <div class="d-flex justify-content-end"  style="padding-top:20px;">
-                    {% if alow == 'restrict' %}
-                      <button class="p btn btn-primary btn-block" disabled><span style="margin-left:10px;text-align:center;">Invest</span></button>
-                    {% else %}
                         <button class="p btn btn-primary btn-block" formaction="/order_place"><span style="margin-left:10px;text-align:center;">Invest  &#x20B9;<input id="output" style="background-color: #377DFF;color:#ffffff;border: 0px none;font-weight: bold; text-align:center;" size="6" readonly></span></button>
-                    {% endif %}
                   </div>
 
                 </form>
@@ -722,537 +718,672 @@
             {% endwith %}
       </div>
 
+
+
+
     <!-- Listing Section -->
-      <div class="container space-1 space-bottom-lg-3">
-      <div class="row">
-        <div class="col-lg-12">
-          <!-- Title and Sort -->
-          <div class="row align-items-sm-center">
-            <div class="col-sm mb-3 mb-sm-0">
-              {% if ipo_up == None %}
-              <h3 class="mb-0">Initial Public Offering (0)</h3>
-              {% else %}
-              <h3 class="disable-select mb-0">Initial Public Offering ({{ ipo_up }})</h3>
-              {% endif %}
-            </div>
-
-          </div>
-          <!-- End Title and Sort -->
-
-          <hr class="my-4">
-
-          <!-- Listing  justify-content-center align-items-lg-center-->
+      <div class="container">
           <div class="row">
-            {% if ipo_up == 0 or ipo_up == None  %}
-                <!-- <div class="col-lg-12">
-                  <div class="btn-block alert alert-warning media" role="alert">
-                    <i class="fas fa-info-circle mt-1 mr-1"></i>
-                    <div class="media-body" role="alert" style="padding-left:10px;">
-                      No Open Ipo
-                    </div>
-                  </div>
+            <div class="col-lg-12">
+              <!-- Title and Sort -->
+              <div class="row align-items-sm-center">
+                <div class="col-sm mb-3 mb-sm-0">
+                  {% if ipo_up == None %}
+                  <h3 class="mb-0">Initial Public Offering (0)</h3>
+                  {% else %}
+                  <h3 class="disable-select mb-0">Initial Public Offering ({{ ipo_up }})</h3>
+                  {% endif %}
                 </div>
-                -->
-                <div class="col-sm-6 mb-5">
-                    <!-- Card -->
-                    <a class="card card-dashed card-hover-shadow h-100" href="javascript:;" data-toggle="modal" data-target="#addAddressModal">
-                      <div class="card-body card-body-centered card-dashed-body" style="padding:60px;">
-                        <img class="avatar avatar-xl avatar-4by3 mb-2" src="static/svg/zebu/book.svg" alt="Image Description">
-                        <span class="text-primary text-hover-primary">
-                          <i class="tio-add"></i> There are no new IPOs
-                        </span>
+
+              </div>
+              <!-- End Title and Sort -->
+
+              <hr class="my-4">
+
+              <!-- Listing  justify-content-center align-items-lg-center-->
+              <div class="row">
+                {% if ipo_up == 0 or ipo_up == None  %}
+                    <!-- <div class="col-lg-12">
+                      <div class="btn-block alert alert-warning media" role="alert">
+                        <i class="fas fa-info-circle mt-1 mr-1"></i>
+                        <div class="media-body" role="alert" style="padding-left:10px;">
+                          No Open Ipo
+                        </div>
                       </div>
-                    </a>
-                    <!-- End Card -->
-                  </div>
+                    </div>
+                    -->
+                    <div class="col-sm-6 mb-5">
+                        <!-- Card -->
+                        <a class="card card-dashed card-hover-shadow h-100" href="javascript:;" data-toggle="modal" data-target="#addAddressModal">
+                          <div class="card-body card-body-centered card-dashed-body" style="padding:60px;">
+                            <img class="avatar avatar-xl avatar-4by3 mb-2" src="static/svg/zebu/book.svg" alt="Image Description">
+                            <span class="text-primary text-hover-primary">
+                              <i class="tio-add"></i> There are no new IPOs
+                            </span>
+                          </div>
+                        </a>
+                        <!-- End Card -->
+                      </div>
 
-            {% else %}
+                {% else %}
 
-                {% for i in range(BB|length) %}
-                    {% if BB[i][10] == 'open' %}
-                      <div class="col-sm-6 mb-5">
+                    {% for i in range(BB|length) %}
+                        {% if BB[i][10] == 'open' %}
+                          <div class="col-sm-6 mb-5">
 
-                          <div class="card card-bordered card-hover-shadow h-100">
+                              <div class="card card-bordered card-hover-shadow h-100">
 
-                              <div class="card-body">
-                                <div class="row mb-3">
+                                  <div class="card-body">
+                                    <div class="row mb-3">
 
-                                  <div class="col">
+                                      <div class="col">
+                                        <a href="/scripts?name={{ BB[i][0] }}">
+                                        <div class="media align-items-center">
+
+                                          <div class="media-body">
+                                              <div class="media align-items-center">
+                                                  <div class="avatar avatar-circle mr-2">
+                                                    <img class="avatar-img" src="static/zlogo/scripts/{{ BB[i][0] }}.jpg" onerror="this.onerror=null;this.src='static/zlogo/scripts/EKI.jpg';" >
+                                                  </div>
+                                                  <div class="media-body">
+                                                    <h6>
+                                                      {% if BB[i][1]|length > 19 %}
+                                                          <span> {{ BB[i][0] }}</span>
+                                                        {% else %}
+                                                          <span> {{ BB[i][0] }}</span>
+                                                        {% endif %}
+
+                                                    </h6>
+                                                  </div>
+                                                </div>
+
+                                          </div>
+
+                                        </div>
+                                        </a>
+                                      </div>
+
+                                      <div class="col-auto">
+                                        <!-- Checkbbox Bookmark -->
+                                        <form>
+
+                                          <div class="hs-unfold">
+                                              <a class="js-hs-unfold-invoker btn btn-icon btn-sm btn-ghost-primary mb-1" href="javascript:;"
+                                                 data-hs-unfold-options='{
+                                                   "target": "#importResumeFromDropdown",
+                                                   "type": "css-animation"
+                                                 }'>
+                                                <i class="fas fa-share-alt"></i>
+                                              </a>
+
+                      <div id="importResumeFromDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-right mt-1">
+                        <a class="dropdown-item" href="#">
+                          <i class="fab fa-facebook dropdown-item-icon"></i> Facebook
+                        </a>
+                        <a class="dropdown-item" href="#">
+                          <i class="fab fa-instagram dropdown-item-icon"></i> Instagram
+                        </a>
+                        <a class="dropdown-item" href="#">
+                          <i class="fab fa-twitter dropdown-item-icon"></i> Twitter
+                        </a>
+                      </div>
+                    </div>
+                                        </form>
+                                        <!-- End Checkbbox Bookmark -->
+                                      </div>
+                                    </div>
+                                    <!-- End Row -->
                                     <a href="/scripts?name={{ BB[i][0] }}">
-                                    <div class="media align-items-center">
+                                      <div class="row">
+                                        <div class="col">
+                                    <h3 class="mb-3">
+                                      {{ BB[i][1] }}
+                                    </h3>
 
-                                      <div class="media-body">
-                                          <div class="media align-items-center">
-                                              <div class="avatar avatar-circle mr-2">
-                                                <img class="avatar-img" src="static/zlogo/scripts/{{ BB[i][0] }}.jpg" onerror="this.onerror=null;this.src='static/zlogo/scripts/EKI.jpg';" >
-                                              </div>
-                                              <div class="media-body">
-                                                <h6>
-                                                  {% if BB[i][1]|length > 19 %}
-                                                      <span> {{ BB[i][0] }}</span>
-                                                    {% else %}
-                                                      <span> {{ BB[i][0] }}</span>
-                                                    {% endif %}
 
-                                                </h6>
+
+                                    <span class="d-block font-size-1 text-body mb-1">
+                                      <span class="badge badge-soft-primary"><i class="fas fa-sort-numeric-up"></i> </span> <span data-toggle="tooltip" data-placement="right" title="Minimum Qty">{{ BB[i][8] }}</span>
+                                    </span>
+                                          <span class="d-block font-size-1 text-body mb-1">
+                                            <span class="badge badge-soft-primary" style="padding:6px;"><i class="fas fa-rupee-sign"></i></span> <span data-toggle="tooltip" data-placement="right" title="Price Range"> {{ BB[i][6] }} - {{ BB[i][7] }}</span>
+                                    </span>
+                                          <span class="d-block font-size-1 text-body mb-1">
+                                            {% if BB[i][4].strftime('%d %b, %Y') == '01 Jan, 1000' %}
+                                            <span class="badge badge-soft-primary"><i class="far fa-calendar"></i></span> <span data-toggle="tooltip" data-placement="right" title="Date Range">01 Jan, 21 - 02 Jan, 21</span>
+                                            {% else %}
+                                            <span class="badge badge-soft-primary"><i class="far fa-calendar"></i></span> <span data-toggle="tooltip" data-placement="right" title="Date Range">{{ BB[i][4].strftime('%d %b, %y') }}  -  {{ BB[i][5].strftime('%d %b, %y') }}</span>
+                                            {% endif %}
+                                          </span>
+                                    </div>
+                                    <div class="col-4">
+                                      <!-- Chart -->
+                                      <div style="padding-top:30px;">
+                                      <div class="chartjs-custom" style="height: 3rem;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                        <canvas class="js-chart chartjs-render-monitor" data-hs-chartjs-options="{
+                                                  &quot;type&quot;: &quot;line&quot;,
+                                                  &quot;data&quot;: {
+                                                     &quot;labels&quot;: [&quot;1 May&quot;,&quot;2 May&quot;,&quot;3 May&quot;,&quot;4 May&quot;,&quot;5 May&quot;,&quot;6 May&quot;,&quot;7 May&quot;,&quot;8 May&quot;,&quot;9 May&quot;,&quot;10 May&quot;,&quot;11 May&quot;,&quot;12 May&quot;,&quot;13 May&quot;,&quot;14 May&quot;,&quot;15 May&quot;,&quot;16 May&quot;,&quot;17 May&quot;,&quot;18 May&quot;,&quot;19 May&quot;,&quot;20 May&quot;,&quot;21 May&quot;,&quot;22 May&quot;,&quot;23 May&quot;,&quot;24 May&quot;,&quot;25 May&quot;,&quot;26 May&quot;,&quot;27 May&quot;,&quot;28 May&quot;,&quot;29 May&quot;,&quot;30 May&quot;,&quot;31 May&quot;],
+                                                     &quot;datasets&quot;: [{
+                                                      &quot;data&quot;: [21,20,24,20,18,17,15,17,18,30,31,30,30,35,25,35,35,40,60,90,90,90,85,70,75,70,30,30,30,50,72],
+                                                      &quot;backgroundColor&quot;: [&quot;rgba(55, 125, 255, 0)&quot;, &quot;rgba(255, 255, 255, 0)&quot;],
+                                                      &quot;borderColor&quot;: &quot;#377dff&quot;,
+                                                      &quot;borderWidth&quot;: 2,
+                                                      &quot;pointRadius&quot;: 0,
+                                                      &quot;pointHoverRadius&quot;: 0
+                                                    }]
+                                                  },
+                                                  &quot;options&quot;: {
+                                                     &quot;scales&quot;: {
+                                                       &quot;yAxes&quot;: [{
+                                                         &quot;display&quot;: false
+                                                       }],
+                                                       &quot;xAxes&quot;: [{
+                                                         &quot;display&quot;: false
+                                                       }]
+                                                     },
+                                                    &quot;hover&quot;: {
+                                                      &quot;mode&quot;: &quot;nearest&quot;,
+                                                      &quot;intersect&quot;: false
+                                                    },
+                                                    &quot;tooltips&quot;: {
+                                                      &quot;postfix&quot;: &quot;k&quot;,
+                                                      &quot;hasIndicator&quot;: true,
+                                                      &quot;intersect&quot;: false
+                                                    }
+                                                  }
+                                                }" style="display: block; width: 155px; height: 48px;" width="155" height="48">
+                                        </canvas>
+                                      </div>
+
+                                      <div style="padding-top:20px;">
+                                      <!--
+                                      <span class="badge badge-soft-success">
+                                          <i class="fas fa-arrow-up"></i> 1.7%
+                                      </span>
+                                        <span class="font-size-1 text-body mb-1"> 29.1%</span> -->
+                                        </div>
+                                        </div>
+                                    </div>
+                                        </div>
+                                      </a>
+                                  </div>
+
+                                  <div class="card-footer">
+                                    <span class="d-block font-size-1 text-body mb-1">
+                                      <div class="row">
+                                          <div class="col" style="padding-top:2px;padding-bottom: 10px;">
+                                            <a class="font-weight-bold" href="#" target="_blank" style="font-size: 15px;">RHP Doc <i class="fas fa-external-link-alt fa-xs"></i></a>
+                                          </div>
+                                          <div class="col-auto">
+                                              <form action="/order?invest_script={{ BB[i][0]}}" method="post">
+                                              {% set inv = BB[i][7] | int * BB[i][8] | int %}
+                                                  <input type="hidden" id="invest_script" name="invest_name" value="{{ BB[i][0]}}">
+                                                <button class="btn btn-xs btn-primary" type="submit">
+                                                        Invest &#8377; {{ inv }}</button>
+                                                  </form>
+
+                                          </div>
+                                      </div>
+                                    </span>
+                                  </div>
+                                </div>
+
+                          </div>
+                        {% endif %}
+                    {% endfor %}
+
+
+                {% endif %}
+
+
+                <!--
+                {% if ipo_up == 0 or ipo_up == None %}
+                    <div class="col-lg-12">
+                      <div class="btn-block alert alert-warning media" role="alert">
+                        <i class="fas fa-info-circle mt-1 mr-1"></i>
+                        <div class="media-body" role="alert" style="padding-left:10px;">
+                          No Open Ipo
+                        </div>
+                      </div>
+                    </div>
+                {% else %}
+                {% for i in range(DLST|length) %}
+                <div class="col-sm-6 mb-5">
+                              <div class="card card-bordered card-hover-shadow h-100">
+                                  <div class="card-body">
+                                    <div class="row mb-3">
+                                      <div class="col">
+                                        <div class="media align-items-center">
+
+                                          <div class="media-body">
+                                            <div class="media align-items-center">
+                                                  <div class="avatar avatar-circle mr-2">
+                                                    <img class="avatar-img" src="static/zlogo/BAR.jpg" alt="Image Description">
+                                                  </div>
+                                                  <div class="media-body">
+                                                    <h6 class="mb-0">
+                                                      {% if DLST[i][1]|length > 19 %}
+                                                          <span> {{ DLST[i][1] }}</span>
+                                                        {% else %}
+                                                          <span> {{ DLST[i][1] }}</span>
+                                                        {% endif %}
+
+                                                    </h6>
+                                                  </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-auto">
+
+                                        <div class="custom-control custom-checkbox-bookmark">
+                                          <input type="checkbox" id="checkboxBookmark{{ i+ BB|length }}" class="custom-control-input custom-checkbox-bookmark-input">
+                                          <label class="custom-checkbox-bookmark-label" for="checkboxBookmark{{ i+ BB|length }}">
+                                            <span class="custom-checkbox-bookmark-default" data-toggle="tooltip" data-placement="top" title="Save this job">
+                                              <i class="far fa-star"></i>
+                                            </span>
+                                            <span class="custom-checkbox-bookmark-active" data-toggle="tooltip" data-placement="top" title="Saved">
+                                              <i class="fas fa-star"></i>
+                                            </span>
+                                          </label>
+                                        </div>
+
+                                      </div>
+                                    </div>
+
+
+                                    <h3 class="mb-3">
+                                      <a class="text-dark" href="job-overview.html">{{ DLST[i][0] }}</a>
+                                    </h3>
+
+                                    <span class="d-block font-size-1 text-body mb-1">
+                                      <span data-toggle="tooltip" data-placement="right" title="Price Range"> &#8377;{{ DLST[i][6] }} - &#8377;{{ DLST[i][7] }}</span>
+                                    </span>
+
+                                    <span class="d-block font-size-1 text-body mb-1">
+                                      <span class="badge badge-soft-primary" data-toggle="tooltip" data-placement="right" title="Minimum Qty">Lot : {{ DLST[i][8] }}</span>
+                                    </span>
+                                  </div>
+
+                                  <div class="card-footer">
+                                    <ul class="list-inline list-separator small text-body">
+
+                                      <li class="list-inline-item">{{ DLST[i][3] }}</li>
+                                      <li class="list-inline-item">{{ DLST[i][4] }} - {{ DLST[i][5] }}</li>
+                                    </ul>
+                                  </div>
+                                </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% if ipo_up == 0 or ipo_up == None %}
+                    <div class="col-lg-12">
+                      <div class="btn-block alert alert-warning media" role="alert">
+                        <i class="fas fa-info-circle mt-1 mr-1"></i>
+                        <div class="media-body" role="alert" style="padding-left:10px;">
+                          No Open Ipo
+                        </div>
+                      </div>
+                    </div>
+                {% else %}
+                {% for i in range(TAKEOVER|length) %}
+                       <div class="col-sm-6 mb-5">
+                      <div class="card card-bordered card-hover-shadow h-100">
+                                  <div class="card-body">
+                                    <div class="row mb-3">
+                                      <div class="col">
+                                        <div class="media align-items-center">
+
+                                          <div class="media-body">
+                                            <div class="media align-items-center">
+                                                  <div class="avatar avatar-circle mr-2">
+                                                    <img class="avatar-img" src="static/zlogo/BAR.jpg" alt="Image Description">
+                                                  </div>
+                                                  <div class="media-body">
+                                                    <h6 class="mb-0">
+                                                      {% if TAKEOVER[i][1]|length > 19 %}
+                                                          <span> {{ TAKEOVER[i][1] }}</span>
+                                                        {% else %}
+                                                          <span> {{ TAKEOVER[i][1] }}</span>
+                                                        {% endif %}
+
+                                                    </h6>
+                                                  </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-auto">
+
+                                        <div class="custom-control custom-checkbox-bookmark">
+                                          <input type="checkbox" id="checkboxBookmark{{ i + BB|length + DLST|length }}" class="custom-control-input custom-checkbox-bookmark-input">
+                                          <label class="custom-checkbox-bookmark-label" for="checkboxBookmark{{ i + BB|length + DLST|length }}">
+                                            <span class="custom-checkbox-bookmark-default" data-toggle="tooltip" data-placement="top" title="Save this job">
+                                              <i class="far fa-star"></i>
+                                            </span>
+                                            <span class="custom-checkbox-bookmark-active" data-toggle="tooltip" data-placement="top" title="Saved">
+                                              <i class="fas fa-star"></i>
+                                            </span>
+                                          </label>
+                                        </div>
+
+                                      </div>
+                                    </div>
+
+
+                                    <h3 class="mb-3">
+                                      <a class="text-dark" href="job-overview.html">{{ TAKEOVER[i][0] }}</a>
+                                    </h3>
+
+                                    <span class="d-block font-size-1 text-body mb-1">
+                                      <span data-toggle="tooltip" data-placement="right" title="Price Range"> &#8377;{{ TAKEOVER[i][6] }} - &#8377;{{ TAKEOVER[i][7] }}</span>
+                                    </span>
+
+                                    <span class="d-block font-size-1 text-body mb-1" style="padding-right:20px;">
+                                      <span class="badge badge-soft-primary" data-toggle="tooltip" data-placement="right" title="Minimum Qty">Lot : {{ TAKEOVER[i][8] }}</span>
+                                    </span>
+                                  </div>
+
+                                  <div class="card-footer">
+                                    <ul class="list-inline list-separator small text-body">
+
+                                      <li class="list-inline-item">{{ TAKEOVER[i][3] }}</li>
+                                      <li class="list-inline-item">{{ TAKEOVER[i][4] }} - {{ TAKEOVER[i][5] }}</li>
+                                    </ul>
+                                  </div>
+                                </div>
+                      </div>
+                {% endfor %}
+                {% endif %}
+              </div>
+                -->
+
+
+            </div>
+          </div>
+          </div>
+      </div>
+      <div class="container space-1">
+            {% if login == 'log_in' %}
+              <!-- Card -->
+              <div class="overflow-hidden mb-1">
+                <div class="card-header card-collapse" id="coursesHeadingOne">
+                  <a class="btn btn-link btn-sm btn-block card-btn p-3"  href="javascript:;" role="button" data-toggle="collapse" data-target="#coursesCollapseOne"
+                          aria-expanded="true" aria-controls="coursesCollapseOne">
+                    <!-- Header -->
+                    <span class="row">
+                      <span class="col-8">
+                        <span class="media">
+                          <span class="card-btn-toggle mr-3 ml-0">
+                            <span class="card-btn-toggle-default">+</span>
+                            <span class="card-btn-toggle-active">−</span>
+                          </span>
+                          <span class="media-body">
+                            <span class="text-body font-weight-bold mr-5">Order Book</span>
+                          </span>
+                        </span>
+                      </span>
+
+                    </span>
+                    <!-- End Header -->
+                  </a>
+                </div>
+                <div id="coursesCollapseOne" class="collapse" aria-labelledby="coursesHeadingOne">
+                  <div class="card-body p-0">
+                        {% if orderbook %}
+                          {% for i in range(orderbook[0]|length) %}
+                                <!-- Course Program -->
+                                <div class=" py-3 pr-3 pl-3">
+
+                                        <div class="card card-bordered card-hover-shadow">
+                                            <div class="card-body">
+                                              <!-- Media -->
+                                              <div class="d-sm-flex">
+                                                <div class="media align-items-center align-items-sm-start mb-3">
+                                                  <img class="avatar avatar-sm mr-3" src="static/zlogo/scripts/BARBEQUE.jpg" alt="Image Description">
+                                                  <div class="media-body d-sm-none">
+                                                    <h6 class="mb-0">
+                                                      <a class="text-dark" href="employer.html">{{ orderbook[0]['scripid'][i] }}</a>
+                                                    </h6>
+                                                  </div>
+                                                </div>
+
+                                                <div class="media-body">
+                                                  <div class="row">
+                                                    <div class="col col-md-8">
+                                                      <h3 class="mb-0">
+                                                        <a class="text-dark" href="job-overview.html">{{ orderbook[0]['scripid'][i] }}</a>
+                                                      </h3>
+                                                      <div class="">
+                                                        <h6 class="mb-0">
+                                                          <a class="text-dark" href="employer.html">{{ orderbook[0]['applicationno'][i] }}</a>
+                                                        </h6>
+                                                      </div>
+                                                        <br>
+                                                      <div class="">
+                                                        <h6 class="mb-0">
+
+                                                        </h6>
+                                                      </div>
+                                                    </div>
+
+                                                    <div class="col-auto order-md-3">
+                                                      <!-- Checkbbox Bookmark -->
+                                                      <div class="custom-control custom-checkbox-bookmark">
+                                                        <input type="checkbox" id="checkboxBookmark1" class="custom-control-input custom-checkbox-bookmark-input">
+                                                        <label class="custom-checkbox-bookmark-label" for="checkboxBookmark1">
+                                                          <span class="custom-checkbox-bookmark-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save this job">
+                                                            <i class="far fa-star"></i>
+                                                          </span>
+                                                          <span class="custom-checkbox-bookmark-active" data-toggle="tooltip" data-placement="top" title="" data-original-title="Saved">
+                                                            <i class="fas fa-star"></i>
+                                                          </span>
+                                                        </label>
+                                                      </div>
+                                                      <!-- End Checkbbox Bookmark -->
+                                                    </div>
+
+                                                    <div class="col-12 col-md mt-3 mt-md-0">
+                                                      <span class="d-block font-size-1 text-body mb-1">{{ orderbook[0]['rejectreason'][i] }}</span>
+
+                                                      <span class="badge badge-soft-info mr-2">
+                                                        <span class="legend-indicator bg-info"></span>{{ orderbook[0]['panno'][i] }}
+                                                      </span>
+                                                    </div>
+                                                  </div>
+                                                  <!-- End Row -->
+                                                </div>
                                               </div>
+                                              <!-- End Media -->
                                             </div>
 
-                                      </div>
-
-                                    </div>
-                                    </a>
-                                  </div>
-
-                                  <div class="col-auto">
-                                    <!-- Checkbbox Bookmark -->
-                                    <form>
-
-                                      <div class="hs-unfold">
-                                          <a class="js-hs-unfold-invoker btn btn-icon btn-sm btn-ghost-primary mb-1" href="javascript:;"
-                                             data-hs-unfold-options='{
-                                               "target": "#importResumeFromDropdown",
-                                               "type": "css-animation"
-                                             }'>
-                                            <i class="fas fa-share-alt"></i>
-                                          </a>
-
-                  <div id="importResumeFromDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-right mt-1">
-                    <a class="dropdown-item" href="#">
-                      <i class="fab fa-facebook dropdown-item-icon"></i> Facebook
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fab fa-instagram dropdown-item-icon"></i> Instagram
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fab fa-twitter dropdown-item-icon"></i> Twitter
-                    </a>
-                  </div>
-                </div>
-                                    </form>
-                                    <!-- End Checkbbox Bookmark -->
-                                  </div>
-                                </div>
-                                <!-- End Row -->
-                                <a href="/scripts?name={{ BB[i][0] }}">
-                                  <div class="row">
-                                    <div class="col">
-                                <h3 class="mb-3">
-                                  {{ BB[i][1] }}
-                                </h3>
-
-
-
-                                <span class="d-block font-size-1 text-body mb-1">
-                                  <span class="badge badge-soft-primary"><i class="fas fa-sort-numeric-up"></i> </span> <span data-toggle="tooltip" data-placement="right" title="Minimum Qty">{{ BB[i][8] }}</span>
-                                </span>
-                                      <span class="d-block font-size-1 text-body mb-1">
-                                        <span class="badge badge-soft-primary" style="padding:6px;"><i class="fas fa-rupee-sign"></i></span> <span data-toggle="tooltip" data-placement="right" title="Price Range"> {{ BB[i][6] }} - {{ BB[i][7] }}</span>
-                                </span>
-                                      <span class="d-block font-size-1 text-body mb-1">
-                                        {% if BB[i][4].strftime('%d %b, %Y') == '01 Jan, 1000' %}
-                                        <span class="badge badge-soft-primary"><i class="far fa-calendar"></i></span> <span data-toggle="tooltip" data-placement="right" title="Date Range">01 Jan, 21 - 02 Jan, 21</span>
-                                        {% else %}
-                                        <span class="badge badge-soft-primary"><i class="far fa-calendar"></i></span> <span data-toggle="tooltip" data-placement="right" title="Date Range">{{ BB[i][4].strftime('%d %b, %y') }}  -  {{ BB[i][5].strftime('%d %b, %y') }}</span>
-                                        {% endif %}
-                                      </span>
-                                </div>
-                                <div class="col-4">
-                                  <!-- Chart -->
-                                  <div style="padding-top:30px;">
-                                  <div class="chartjs-custom" style="height: 3rem;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                                    <canvas class="js-chart chartjs-render-monitor" data-hs-chartjs-options="{
-                                              &quot;type&quot;: &quot;line&quot;,
-                                              &quot;data&quot;: {
-                                                 &quot;labels&quot;: [&quot;1 May&quot;,&quot;2 May&quot;,&quot;3 May&quot;,&quot;4 May&quot;,&quot;5 May&quot;,&quot;6 May&quot;,&quot;7 May&quot;,&quot;8 May&quot;,&quot;9 May&quot;,&quot;10 May&quot;,&quot;11 May&quot;,&quot;12 May&quot;,&quot;13 May&quot;,&quot;14 May&quot;,&quot;15 May&quot;,&quot;16 May&quot;,&quot;17 May&quot;,&quot;18 May&quot;,&quot;19 May&quot;,&quot;20 May&quot;,&quot;21 May&quot;,&quot;22 May&quot;,&quot;23 May&quot;,&quot;24 May&quot;,&quot;25 May&quot;,&quot;26 May&quot;,&quot;27 May&quot;,&quot;28 May&quot;,&quot;29 May&quot;,&quot;30 May&quot;,&quot;31 May&quot;],
-                                                 &quot;datasets&quot;: [{
-                                                  &quot;data&quot;: [21,20,24,20,18,17,15,17,18,30,31,30,30,35,25,35,35,40,60,90,90,90,85,70,75,70,30,30,30,50,72],
-                                                  &quot;backgroundColor&quot;: [&quot;rgba(55, 125, 255, 0)&quot;, &quot;rgba(255, 255, 255, 0)&quot;],
-                                                  &quot;borderColor&quot;: &quot;#377dff&quot;,
-                                                  &quot;borderWidth&quot;: 2,
-                                                  &quot;pointRadius&quot;: 0,
-                                                  &quot;pointHoverRadius&quot;: 0
-                                                }]
-                                              },
-                                              &quot;options&quot;: {
-                                                 &quot;scales&quot;: {
-                                                   &quot;yAxes&quot;: [{
-                                                     &quot;display&quot;: false
-                                                   }],
-                                                   &quot;xAxes&quot;: [{
-                                                     &quot;display&quot;: false
-                                                   }]
-                                                 },
-                                                &quot;hover&quot;: {
-                                                  &quot;mode&quot;: &quot;nearest&quot;,
-                                                  &quot;intersect&quot;: false
-                                                },
-                                                &quot;tooltips&quot;: {
-                                                  &quot;postfix&quot;: &quot;k&quot;,
-                                                  &quot;hasIndicator&quot;: true,
-                                                  &quot;intersect&quot;: false
-                                                }
-                                              }
-                                            }" style="display: block; width: 155px; height: 48px;" width="155" height="48">
-                                    </canvas>
-                                  </div>
-
-                                  <div style="padding-top:20px;">
-                                  <!--
-                                  <span class="badge badge-soft-success">
-                                      <i class="fas fa-arrow-up"></i> 1.7%
-                                  </span>
-                                    <span class="font-size-1 text-body mb-1"> 29.1%</span> -->
-                                    </div>
-                                    </div>
-                                </div>
-                                    </div>
-                                  </a>
-                              </div>
-
-                              <div class="card-footer">
-                                <span class="d-block font-size-1 text-body mb-1">
-                                  <div class="row">
-                                      <div class="col" style="padding-top:2px;padding-bottom: 10px;">
-                                        <a class="font-weight-bold" href="#" target="_blank" style="font-size: 15px;">RHP Doc <i class="fas fa-external-link-alt fa-xs"></i></a>
-                                      </div>
-                                      <div class="col-auto">
-                                          <form action="/order?invest_script={{ BB[i][0]}}" method="post">
-                                          {% set inv = BB[i][7] | int * BB[i][8] | int %}
-                                              <input type="hidden" id="invest_script" name="invest_name" value="{{ BB[i][0]}}">
-                                            <button class="btn btn-xs btn-primary" type="submit">
-                                                    Invest &#8377; {{ inv }}</button>
-                                              </form>
-
-                                      </div>
-                                  </div>
-                                </span>
-                              </div>
-                            </div>
-
-                      </div>
-                    {% endif %}
-                {% endfor %}
-
-
-            {% endif %}
-
-
-            <!--
-            {% if ipo_up == 0 or ipo_up == None %}
-                <div class="col-lg-12">
-                  <div class="btn-block alert alert-warning media" role="alert">
-                    <i class="fas fa-info-circle mt-1 mr-1"></i>
-                    <div class="media-body" role="alert" style="padding-left:10px;">
-                      No Open Ipo
-                    </div>
-                  </div>
-                </div>
-            {% else %}
-            {% for i in range(DLST|length) %}
-            <div class="col-sm-6 mb-5">
-                          <div class="card card-bordered card-hover-shadow h-100">
-                              <div class="card-body">
-                                <div class="row mb-3">
-                                  <div class="col">
-                                    <div class="media align-items-center">
-
-                                      <div class="media-body">
-                                        <div class="media align-items-center">
-                                              <div class="avatar avatar-circle mr-2">
-                                                <img class="avatar-img" src="static/zlogo/BAR.jpg" alt="Image Description">
-                                              </div>
-                                              <div class="media-body">
-                                                <h6 class="mb-0">
-                                                  {% if DLST[i][1]|length > 19 %}
-                                                      <span> {{ DLST[i][1] }}</span>
-                                                    {% else %}
-                                                      <span> {{ DLST[i][1] }}</span>
-                                                    {% endif %}
-
-                                                </h6>
-                                              </div>
+                                            <div class="card-footer">
+                                              <ul class="list-inline list-separator small text-body">
+                                                <li class="list-inline-item">{{ orderbook[0]['entrydatetime'][i] }}</li>
+                                                <li class="list-inline-item">{{ orderbook[0]['accountnumber_upiid'][i] }}</li>
+                                                <li class="list-inline-item">{{ orderbook[0]['clientbenfid'][i] }}</li>
+                                              </ul>
+                                            </div>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </div>
 
-                                  <div class="col-auto">
-
-                                    <div class="custom-control custom-checkbox-bookmark">
-                                      <input type="checkbox" id="checkboxBookmark{{ i+ BB|length }}" class="custom-control-input custom-checkbox-bookmark-input">
-                                      <label class="custom-checkbox-bookmark-label" for="checkboxBookmark{{ i+ BB|length }}">
-                                        <span class="custom-checkbox-bookmark-default" data-toggle="tooltip" data-placement="top" title="Save this job">
-                                          <i class="far fa-star"></i>
-                                        </span>
-                                        <span class="custom-checkbox-bookmark-active" data-toggle="tooltip" data-placement="top" title="Saved">
-                                          <i class="fas fa-star"></i>
-                                        </span>
-                                      </label>
-                                    </div>
-
-                                  </div>
                                 </div>
-
-
-                                <h3 class="mb-3">
-                                  <a class="text-dark" href="job-overview.html">{{ DLST[i][0] }}</a>
-                                </h3>
-
-                                <span class="d-block font-size-1 text-body mb-1">
-                                  <span data-toggle="tooltip" data-placement="right" title="Price Range"> &#8377;{{ DLST[i][6] }} - &#8377;{{ DLST[i][7] }}</span>
-                                </span>
-
-                                <span class="d-block font-size-1 text-body mb-1">
-                                  <span class="badge badge-soft-primary" data-toggle="tooltip" data-placement="right" title="Minimum Qty">Lot : {{ DLST[i][8] }}</span>
-                                </span>
-                              </div>
-
-                              <div class="card-footer">
-                                <ul class="list-inline list-separator small text-body">
-
-                                  <li class="list-inline-item">{{ DLST[i][3] }}</li>
-                                  <li class="list-inline-item">{{ DLST[i][4] }} - {{ DLST[i][5] }}</li>
-                                </ul>
-                              </div>
-                            </div>
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% if ipo_up == 0 or ipo_up == None %}
-                <div class="col-lg-12">
-                  <div class="btn-block alert alert-warning media" role="alert">
-                    <i class="fas fa-info-circle mt-1 mr-1"></i>
-                    <div class="media-body" role="alert" style="padding-left:10px;">
-                      No Open Ipo
-                    </div>
+                                <!-- End Course Program -->
+                          {% endfor %}
+                        {%  else  %}
+                            No record
+                        {% endif %}
                   </div>
                 </div>
-            {% else %}
-            {% for i in range(TAKEOVER|length) %}
-                   <div class="col-sm-6 mb-5">
-                  <div class="card card-bordered card-hover-shadow h-100">
-                              <div class="card-body">
-                                <div class="row mb-3">
-                                  <div class="col">
-                                    <div class="media align-items-center">
-
-                                      <div class="media-body">
-                                        <div class="media align-items-center">
-                                              <div class="avatar avatar-circle mr-2">
-                                                <img class="avatar-img" src="static/zlogo/BAR.jpg" alt="Image Description">
-                                              </div>
-                                              <div class="media-body">
-                                                <h6 class="mb-0">
-                                                  {% if TAKEOVER[i][1]|length > 19 %}
-                                                      <span> {{ TAKEOVER[i][1] }}</span>
-                                                    {% else %}
-                                                      <span> {{ TAKEOVER[i][1] }}</span>
-                                                    {% endif %}
-
-                                                </h6>
-                                              </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div class="col-auto">
-
-                                    <div class="custom-control custom-checkbox-bookmark">
-                                      <input type="checkbox" id="checkboxBookmark{{ i + BB|length + DLST|length }}" class="custom-control-input custom-checkbox-bookmark-input">
-                                      <label class="custom-checkbox-bookmark-label" for="checkboxBookmark{{ i + BB|length + DLST|length }}">
-                                        <span class="custom-checkbox-bookmark-default" data-toggle="tooltip" data-placement="top" title="Save this job">
-                                          <i class="far fa-star"></i>
-                                        </span>
-                                        <span class="custom-checkbox-bookmark-active" data-toggle="tooltip" data-placement="top" title="Saved">
-                                          <i class="fas fa-star"></i>
-                                        </span>
-                                      </label>
-                                    </div>
-
-                                  </div>
-                                </div>
-
-
-                                <h3 class="mb-3">
-                                  <a class="text-dark" href="job-overview.html">{{ TAKEOVER[i][0] }}</a>
-                                </h3>
-
-                                <span class="d-block font-size-1 text-body mb-1">
-                                  <span data-toggle="tooltip" data-placement="right" title="Price Range"> &#8377;{{ TAKEOVER[i][6] }} - &#8377;{{ TAKEOVER[i][7] }}</span>
-                                </span>
-
-                                <span class="d-block font-size-1 text-body mb-1" style="padding-right:20px;">
-                                  <span class="badge badge-soft-primary" data-toggle="tooltip" data-placement="right" title="Minimum Qty">Lot : {{ TAKEOVER[i][8] }}</span>
-                                </span>
-                              </div>
-
-                              <div class="card-footer">
-                                <ul class="list-inline list-separator small text-body">
-
-                                  <li class="list-inline-item">{{ TAKEOVER[i][3] }}</li>
-                                  <li class="list-inline-item">{{ TAKEOVER[i][4] }} - {{ TAKEOVER[i][5] }}</li>
-                                </ul>
-                              </div>
-                            </div>
-                  </div>
-            {% endfor %}
+              </div>
+              <!-- End Card -->
             {% endif %}
-          </div>
-            -->
-
-
         </div>
-      </div>
-      </div>
-
-        <!-- End S -->
-      <div class="row">
-        <div class=" col-lg-12">
-          <div class="card card-bordered">
-              <!-- Header -->
-              <div class="card-header">
-                <div class="row justify-content-between align-items-center flex-grow-1">
-                      <div class="col-12 col-md">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <h3 class="mb-0">Closed Issue</h3>
+      <div class="container space-bottom-lg-3">
+            <div class="row">
+                <div class=" col-lg-12">
+                  <div class="card card-bordered">
+                      <!-- Header -->
+                      <div class="card-header">
+                        <div class="row justify-content-between align-items-center flex-grow-1">
+                              <div class="col-12 col-md">
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <h3 class="mb-0">Closed Issue</h3>
+                                </div>
+                              </div>
+                              <div class="col-auto">
+                                <!-- Filter -->
+                                <div class="row align-items-sm-center">
+                                  <div class="col-md">
+                                    <form>
+                                      <!-- Search -->
+                                      <div class="input-group input-group-merge input-group-flush">
+                                        <div class="input-group-prepend">
+                                          <div class="input-group-text">
+                                            <i class="tio-search"></i>
+                                          </div>
+                                        </div>
+                                        <input id="myInput" type="search" class="form-control" placeholder="Search users" aria-label="Search users" onkeyup="mysearchFunction()">
+                                      </div>
+                                      <!-- End Search -->
+                                    </form>
+                                  </div>
+                                </div>
+                                <!-- End Filter -->
+                              </div>
                         </div>
                       </div>
-                      <div class="col-auto">
-                        <!-- Filter -->
-                        <div class="row align-items-sm-center">
-                          <div class="col-md">
-                            <form>
-                              <!-- Search -->
-                              <div class="input-group input-group-merge input-group-flush">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">
-                                    <i class="tio-search"></i>
-                                  </div>
-                                </div>
-                                <input id="myInput" type="search" class="form-control" placeholder="Search users" aria-label="Search users" onkeyup="mysearchFunction()">
-                              </div>
-                              <!-- End Search -->
-                            </form>
+                      <!-- End Header -->
+                      <!-- Table -->
+                      <div class="table-responsive datatable-custom">
+                        <table id="myTable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+                               data-hs-datatables-options='{
+                                 "columnDefs": [{
+                                    "targets": [0, 1],
+                                    "orderable": false
+                                  }],
+                                 "order": [],
+                                 "info": {
+                                   "totalQty": "#datatableWithPaginationInfoTotalQty"
+                                 },
+                                 "search": "#datatableSearch",
+                                 "entries": "#datatableEntries",
+                                 "pageLength": 50,
+                                 "isResponsive": True,
+                                 "isShowPaging": True,
+                                 "pagination": "datatablePagination"
+                               }'>
+                          <thead class="thead-light">
+                            <tr>
+
+                              <th>IPO's</th>
+                              <th>Qty</th>
+                              <th>Price Range</th>
+                              <th>Date</th>
+                              <th>RHP Doc</th>
+
+
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                          {% if ipo_close == 0 or ipo_close == [] %}
+                            <tr>
+                              <td colspan="5">
+                                      <div style="text-align: center;">
+                                            <img class="" src="static/svg/zebu/sorry.svg" alt="Image Description" style="width: 7rem;">
+                                            <p class="mb-0">No data to show</p>
+                                      </div>
+                              </td>
+
+                          </tr>
+                        {% else %}
+                          {% set j=0 %}
+                          {% for i in range(ipo_close|length) %}
+                          <tr>
+                              <td>{{ ipo_close[i][0] }}</td>
+                              <td>{{ ipo_close[i][8] }}</td>
+                              <td>&#8377;{{ ipo_close[i][6] }} - &#8377;{{ ipo_close[i][7] }}</td>
+                              <td>
+                                  {% if BB[i][4].strftime('%d-%m-%Y') == '01-01-1000' %}
+                                                -
+                                  {% else %}
+                                      {{ ipo_close[i][4].strftime('%d-%m-%Y') }} - {{ ipo_close[i][5].strftime('%d-%m-%Y') }}
+                                  {% endif %}
+                              </td>
+                              <td><a href="#"> View</a></td>
+
+                          </tr>
+                          {% endfor %}
+                          {% endif %}
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- End Table -->
+
+                      <!-- Footer -->
+                      <div class="card-footer">
+                        <!-- Pagination -->
+                        <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+                          <div class="col-sm mb-2 mb-sm-0">
+                            <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                              <span class="mr-2">Showing:</span>
+
+                              <!-- Select -->
+                             <select class="js-custom-select custom-select" size="1" style="opacity: 0;"
+                                data-hs-select2-options='{
+                                  "minimumResultsForSearch": "Infinity",
+                                  "dropdownAutoWidth": true,
+                                  "width": "auto"
+                                }'>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30" selected>30</option>
+                                <option value="40">40</option>
+                              </select>
+                              <!-- End Select -->
+
+                              <span class="text-secondary mr-2" style="padding-left:10px;"> of</span>
+
+                              <!-- Pagination Quantity -->
+                              <span id="datatableWithPaginationInfoTotalQty"></span>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-auto">
+                            <div class="d-flex justify-content-center justify-content-sm-end">
+                              <!-- Pagination -->
+                              <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+                            </div>
                           </div>
                         </div>
-                        <!-- End Filter -->
+                        <!-- End Pagination -->
                       </div>
-                </div>
-              </div>
-              <!-- End Header -->
-              <!-- Table -->
-              <div class="table-responsive datatable-custom">
-                <table id="myTable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
-                       data-hs-datatables-options='{
-                         "columnDefs": [{
-                            "targets": [0, 1],
-                            "orderable": false
-                          }],
-                         "order": [],
-                         "info": {
-                           "totalQty": "#datatableWithPaginationInfoTotalQty"
-                         },
-                         "search": "#datatableSearch",
-                         "entries": "#datatableEntries",
-                         "pageLength": 50,
-                         "isResponsive": True,
-                         "isShowPaging": True,
-                         "pagination": "datatablePagination"
-                       }'>
-                  <thead class="thead-light">
-                    <tr>
-
-                      <th>IPO's</th>
-                      <th>Qty</th>
-                      <th>Price Range</th>
-                      <th>Date</th>
-                      <th>RHP Doc</th>
-
-
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                  {% if ipo_close == 0 or ipo_close == [] %}
-                    <tr>
-                      <td colspan="5">
-                              <div style="text-align: center;">
-                                    <img class="" src="static/svg/zebu/sorry.svg" alt="Image Description" style="width: 7rem;">
-                                    <p class="mb-0">No data to show</p>
-                              </div>
-                      </td>
-
-                  </tr>
-                {% else %}
-                  {% set j=0 %}
-                  {% for i in range(ipo_close|length) %}
-                  <tr>
-                      <td>{{ ipo_close[i][0] }}</td>
-                      <td>{{ ipo_close[i][8] }}</td>
-                      <td>&#8377;{{ ipo_close[i][6] }} - &#8377;{{ ipo_close[i][7] }}</td>
-                      <td>
-                          {% if BB[i][4].strftime('%d-%m-%Y') == '01-01-1000' %}
-                                        -
-                          {% else %}
-                              {{ ipo_close[i][4].strftime('%d-%m-%Y') }} - {{ ipo_close[i][5].strftime('%d-%m-%Y') }}
-                          {% endif %}
-                      </td>
-                      <td><a href="#"> View</a></td>
-
-                  </tr>
-                  {% endfor %}
-                  {% endif %}
-                  </tbody>
-                </table>
-              </div>
-              <!-- End Table -->
-
-              <!-- Footer -->
-              <div class="card-footer">
-                <!-- Pagination -->
-                <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
-                  <div class="col-sm mb-2 mb-sm-0">
-                    <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
-                      <span class="mr-2">Showing:</span>
-
-                      <!-- Select -->
-                     <select class="js-custom-select custom-select" size="1" style="opacity: 0;"
-                        data-hs-select2-options='{
-                          "minimumResultsForSearch": "Infinity",
-                          "dropdownAutoWidth": true,
-                          "width": "auto"
-                        }'>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30" selected>30</option>
-                        <option value="40">40</option>
-                      </select>
-                      <!-- End Select -->
-
-                      <span class="text-secondary mr-2" style="padding-left:10px;"> of</span>
-
-                      <!-- Pagination Quantity -->
-                      <span id="datatableWithPaginationInfoTotalQty"></span>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-auto">
-                    <div class="d-flex justify-content-center justify-content-sm-end">
-                      <!-- Pagination -->
-                      <nav id="datatablePagination" aria-label="Activity pagination"></nav>
-                    </div>
+                      <!-- End Footer -->
                   </div>
                 </div>
-                <!-- End Pagination -->
               </div>
-              <!-- End Footer -->
-          </div>
         </div>
-      </div>
-    </div>
-    <!-- End Listing Section -->
+      <script type="text/javascript">
+          var intervalID = setInterval(update_values,10000);
+
+          function update_values() {
+                $.getJSON('/ipo_index',
+
+                  function(data) {
+
+                    console.log("Hello");
+
+                  });
+                  console.log("Hello 1");
+
+            };
+            function stopTextColor() {
+              clearInterval(intervalID);
+            }
+      </script>
 
 
   </main>
@@ -1315,18 +1446,15 @@
   <script src="static/vendor/datatables.net.extensions/select/select.min.js"></script>
   <script src="/static/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="/static/vendor/chart.js.extensions/chartjs-extensions.js"></script>
-    <script src="/static/vendor/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+
   <!-- JS Front -->
   <script src="/static/js/theme.min.js"></script>
 
 
-  <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="/static/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
-    <script src="/static/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- JS Implementing Plugins -->
-    <script src="/static/vendor/chart.js/dist/Chart.min.js"></script>
-    <script src="/static/vendor/chart.js.extensions/chartjs-extensions.js"></script>
+
+
     <script src="/static/vendor/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
 
 
@@ -1857,6 +1985,11 @@ function mysearchFunction() {
   );
   </script>
 
+  <script>
+        $(document).on('click',function(){
+        $('.lectcollapse').collapse('hide');
+        })
+  </script>
 
 <div class="modal fade" id="myModalBottom" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-bottom">
@@ -1933,11 +2066,11 @@ function mysearchFunction() {
 						+ " was changed to " + g;
 			}
 		</script>
-<script>
-  $(function() {
-                    setTimeout(function() { $("#hideDiv").fadeOut(1500); }, 5000)
-                })
-</script>
+        <script>
+          $(function() {
+                            setTimeout(function() { $("#hideDiv").fadeOut(1500); }, 5000)
+                        })
+        </script>
 
 </body>
 </html>

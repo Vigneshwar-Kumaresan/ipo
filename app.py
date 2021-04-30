@@ -142,11 +142,51 @@ def ApplicationNo():
     print(genapp)
     return genapp
 
+def order_book(isymbol, idate, itime):
+    url = 'https://ibbs.bseindia.com/ibbsmsgapi/iBBSWebBroadcastApi.svc/v1/login'
+    body = {"membercode": zebutrade_membercode, "loginid": zebutrade_loginid,
+            "password": zebutrade_password, "ibbsid": zebutrade_ibbsid}
+    headers = {'content-type': 'application/json', "User-Agent": USER_AGENT}
+    r = requests.post(url, data=json.dumps(body), headers=headers, verify=False)
 
+    token = json.loads(r.content.decode())['token']
+    print(token)
+    scripid = isymbol  # 'LODHA'
+    ddate = idate  # "08 April 2021"
+    ttime = itime  # "10:36:00"
+    applicationno = ''
+    url = 'https://www.meon.space/ipo/ORDER_DOWNLOAD'
+    headers = {
+        'Content-Type': 'application/json',
+        "User-Agent": USER_AGENT
+    }
+    payload = {'scripid': scripid, 'lastdate': ddate, 'lasttime': ttime, 'applicationno': applicationno}
+
+    response = requests.post(url=url, headers=headers, data=json.dumps(payload), verify=False)
+    checksum = response.json()['checksum']
+    data_json = response.json()['data_json']
+    print("Checksum:", checksum)
+    print("data:", data_json)
+    headers = {
+        'Membercode': zebutrade_membercode,
+        'Login': zebutrade_loginid,
+        'Token': token,
+        'Content-Type': "application/json",
+        'Checksum': checksum,
+        "User-Agent": USER_AGENT
+    }
+
+    response = requests.request("POST", "https://ibbs.bseindia.com/ibbsapi/ibbsapiservice.svc/v1/orderdownload",
+                                data=data_json, headers=headers, verify=False)
+
+    dataaaa = json.loads(response.text)
+    return dataaaa
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
     session["login_check"] = 'None'
+    session["cid"] = None
+
     return render_template('index.html')
 
 @app.route('/removecookie', methods=['POST', 'GET'])
@@ -164,6 +204,14 @@ def logout():
 def login():
     email = request.cookies.get('userID')
     login = session["login_check"]
+    sig = request.args.get('SignIn')
+    session["SignIn"]= sig
+    if session["SignIn"]:
+        pass
+        session["invest_login"] = None
+
+    print(sig)
+
     print("Login:", login)
     if login == 'log_in':
         name = session["otname"]
@@ -385,12 +433,17 @@ def auth():
         # Check OTP Function
         hcheck_otp = hotp.at(cotp[0][0])
         if hcheck_otp == u_otp:
-            time.sleep(2)
             #return render_template('index.html',cname=session["otname"],cid=cid,cmail=cmai,mob=mobil, address=session["address"],dematid=session["dematid"],dpid=session["dpid"],dpname=session["dpname"],pan=x)
-            resp = make_response(redirect(url_for("ipo_index")))
-            resp.set_cookie('userID', cid)
-            session["login_check"] ='log_in'
-            return resp
+            if session["invest_login"]:
+                resp = make_response(redirect(url_for("order")))
+                resp.set_cookie('userID', cid)
+                session["login_check"] ='log_in'
+                return resp
+            else:
+                resp = make_response(redirect(url_for("ipo_index")))
+                resp.set_cookie('userID', cid)
+                session["login_check"] = 'log_in'
+                return resp
         else:
             result = "OTP is Wrong"
             print(result)
@@ -401,6 +454,7 @@ def auth():
 def ipo_index():
     email = request.cookies.get('userID')
     login = session["login_check"]
+    cid = session["cid"]
     print("Login:",login)
     if login == 'log_in':
         name=session["otname"]
@@ -416,8 +470,20 @@ def ipo_index():
         email = session["otname"]
     mycursor.execute("SELECT * FROM ipo")
     data = mycursor.fetchall()
+    if cid:
+        urls = "http://bo.zebull.in:8505/staticdata/wsdl/JSON_KYC.cfm?Username=api&password=api@54321&Client_code=" + cid
+        file = urllib.request.urlopen(urls)
+        for line in file:
+            decoded_line = line.decode("utf-8")
+        if decoded_line == "no data found":
+            bid = None
+        else:
+            responses = requests.get(urls)
+            b = responses.json()['DATA']
+            bid = b[0][12]
+    else:
+        bid = None
     if data:
-
         df_data = pd.DataFrame(data)
         df_data_filter = df_data[(df_data[2] == 'IND') & (df_data[9] == '1')]
         BB = df_data_filter.loc[df_data_filter[3] == 'BB']
@@ -426,10 +492,28 @@ def ipo_index():
         ipo_up = BB.loc[BB[10] == 'open']
         ipo_close = BB.loc[BB[10] == 'closed']
         print(ipo_close)
+        c_dat = []
+        date_time = datetime.datetime.now().strftime("%d %B %Y")
+        for i in range(len(ipo_up)):
+            d = order_book('KGES', date_time, '10:00:00')
+            print("Reply:",d)
+            if d[0]['errorcode']:
+                c_dat = None
+            else:
+                df = pd.DataFrame(d)
+                filt = df[["scripid", "applicantname", "clientbenfid", "panno", "accountnumber_upiid", "entrydatetime",
+                           "rejectreason","applicationno"]]
+                cdata = filt.loc[filt['clientbenfid'] == bid]
+                c_dat.append(cdata)
+            print("c_dat:",c_dat)
 
-        return render_template('ipo_index.html', BB=BB.values.tolist(), DLST=DLST.values.tolist(),TAKEOVER=TAKEOVER.values.tolist(), ipo_up=len(ipo_up),ipo_close=ipo_close.values.tolist(),clientcode=email,uid=None,login=login,name=name,code=code,log=None,forgotup=None,order=None,BBC=None)
+        if name:
+            pass
+        else:
+            c_dat = None
+
+        return render_template('ipo_index.html', BB=BB.values.tolist(), DLST=DLST.values.tolist(),TAKEOVER=TAKEOVER.values.tolist(), ipo_up=len(ipo_up),ipo_close=ipo_close.values.tolist(),clientcode=email,uid=None,login=login,name=name,code=code,log=None,forgotup=None,order=None,BBC=None,orderbook=c_dat,result=time.time())
     else:
-
         return render_template('ipo_index.html', BB=None, DLST=None, TAKEOVER=None, ipo_up=None, ipo_close=None,clientcode=email,uid=None)
 
 @app.route('/scripts', methods=['POST', 'GET'])
@@ -445,7 +529,11 @@ def order():
 
     script = request.args.get('invest_script')
     print(script)
-
+    if script:
+        pass
+    else:
+        script = session["script"]
+    print("Order Script:",script)
     dt = datetime.datetime.now()
     d1 = datetime.datetime(2020, 5, 13, 10, 00, 00)
     d2 = datetime.datetime(2020, 5, 13, 17, 00, 00)
@@ -467,10 +555,9 @@ def order():
         log=None
         order='order'
     else:
-        name= None
-        code= None
-        log='login'
-        order= None
+        session["invest_login"]=True
+        session["script"]=script
+        return redirect(url_for("login"))
     print(email)
     if email == None:
         pass
@@ -490,9 +577,25 @@ def order():
         ipo_close = BB.loc[BB[10] == 'closed']
         BBC=BB.loc[BB[0] == script]
         print(BB)
+        c_dat = []
+        date_time = datetime.datetime.now().strftime("%d %B %Y")
+        for i in range(len(ipo_up)):
+            d = order_book('KGES', date_time, '10:00:00')
+            df = pd.DataFrame(d)
+            if d[0]['errorcode']:
+                c_dat =None
+            else:
+                filt = df[["scripid", "applicantname", "clientbenfid", "panno", "accountnumber_upiid", "entrydatetime",
+                           "rejectreason"]]
+                cdata = filt.loc[filt['clientbenfid'] == '1208040000239660']
+                c_dat.append(cdata)
+        if name:
+            pass
+        else:
+            c_dat = None
     return render_template('ipo_index.html', BB=BB.values.tolist(), DLST=DLST.values.tolist(),
                            TAKEOVER=TAKEOVER.values.tolist(), ipo_up=len(ipo_up), ipo_close=ipo_close.values.tolist(),
-                           clientcode=email, uid=None, login=login, name=name, code=code, log=log, forgotup=None,order=order,BBC=BBC.values.tolist(),alow=alow)
+                           clientcode=email, uid=None, login=login, name=name, code=code, log=log, forgotup=None,order=order,BBC=BBC.values.tolist(),alow=alow,orderbook=c_dat)
 
 @app.route('/order_place', methods=['POST', 'GET'])
 def order_place():
@@ -504,84 +607,90 @@ def order_place():
     upi = request.args.get('upi')
     upibank = request.args.get('upibank')
     upi_id=upi+upibank
+    dt = datetime.datetime.now()
+    d1 = datetime.datetime(2020, 5, 13, 10, 00, 00)
+    d2 = datetime.datetime(2020, 5, 13, 17, 00, 00)
 
-    print(uid,symbol,qty,ratep,cutoof)
+    x = dt.replace(microsecond=0)
 
-    urls = "http://bo.zebull.in:8505/staticdata/wsdl/JSON_KYC.cfm?Username=api&password=api@54321&Client_code=" + uid
-    file = urllib.request.urlopen(urls)
-    for line in file:
-        decoded_line = line.decode("utf-8")
-    if decoded_line == "no data found":
-        result = False
+    if (x.time() < d1.time()) or (x.time() > d2.time()):
+        flash('IPO window will remain open from 10 AM till 5 PM. Please use your UPI for placing bids.')
+        return redirect(url_for('ipo_index'))
     else:
-        result = True
-        responses = requests.get(urls)
-        a = responses.json()['COLUMNS']
-        b = responses.json()['DATA']
-    name = b[0][2]
-    pan = b[0][8]
-    dpid = b[0][12]
-    typer = ""
-    scripid = symbol  # "LODHA" get
-    category = "ind"
-    applicantname = name
-    depository = "cdsl"
-    panno = pan
-    accountnumber_upiid = upi_id # get
-    bidid = ""
-    quantity = qty  # '30' get
-    rate = ratep  # '486.00' get
-    cuttoffflag = "1"
-    orderno = "1234"
-    actioncode = "n"
-    clientbenfid = dpid
-    dpid = "0"
-    flagTemp = 0
-    applicationno = ApplicationNo()
+        print(uid,symbol,qty,ratep,cutoof)
 
-    url = 'https://www.meon.space/ipo/IPO_ORDER_CHECKSUM'
-    headers = {
-        'Content-Type': 'application/json',
-        "User-Agent": USER_AGENT
-    }
-    payload = {'typer': typer, 'scripid': scripid, 'category': category, 'applicantname': applicantname,
-               'depository': depository, 'applicationno': applicationno,
-               'dpid': dpid, 'clientbenfid': clientbenfid, 'panno': panno, 'accountnumber_upiid': accountnumber_upiid,
-               'bidid': bidid, 'quantity': quantity, 'rate': rate, 'cuttoffflag': cuttoffflag,
-               'orderno': orderno, 'actioncode': actioncode, 'company': company, 'membercode': zebutrade_membercode,
-               'loginid': zebutrade_loginid, 'password': zebutrade_password, 'ibbsid': zebutrade_ibbsid}
+        urls = "http://bo.zebull.in:8505/staticdata/wsdl/JSON_KYC.cfm?Username=api&password=api@54321&Client_code=" + uid
+        file = urllib.request.urlopen(urls)
+        for line in file:
+            decoded_line = line.decode("utf-8")
+        if decoded_line == "no data found":
+            result = False
+        else:
+            result = True
+            responses = requests.get(urls)
+            a = responses.json()['COLUMNS']
+            b = responses.json()['DATA']
+        name = b[0][2]
+        pan = b[0][8]
+        dpid = b[0][12]
+        typer = ""
+        scripid = symbol  # "LODHA" get
+        category = "ind"
+        applicantname = name
+        depository = "cdsl"
+        panno = pan
+        accountnumber_upiid = upi_id # get
+        bidid = ""
+        quantity = qty  # '30' get
+        rate = ratep  # '486.00' get
+        cuttoffflag = "1"
+        orderno = "1234"
+        actioncode = "n"
+        clientbenfid = dpid
+        dpid = "0"
+        flagTemp = 0
+        applicationno = ApplicationNo()
 
-    response = requests.post(url=url, headers=headers, data=json.dumps(payload), verify=False)
-    checksum = response.json()['checksum']
-    data_json = response.json()['data_json']
-    url = 'https://ibbs.bseindia.com/ibbsmsgapi/iBBSWebBroadcastApi.svc/v1/login'
-    body = {"membercode": zebutrade_membercode, "loginid": zebutrade_loginid,
-            "password": zebutrade_password, "ibbsid": zebutrade_ibbsid}
-    headers = {'content-type': 'application/json', "User-Agent": USER_AGENT}
-    r = requests.post(url, data=json.dumps(body), headers=headers, verify=False)
-    # print(r.text)
-    token = json.loads(r.text)['token']
-    headers = {
-        'Membercode': zebutrade_membercode,
-        'Login': zebutrade_loginid,
-        'Token': token,
-        'Content-Type': "application/json",
-        'Checksum': checksum,
-        "User-Agent": USER_AGENT
-    }
+        url = 'https://www.meon.space/ipo/IPO_ORDER_CHECKSUM'
+        headers = {
+            'Content-Type': 'application/json',
+            "User-Agent": USER_AGENT
+        }
+        payload = {'typer': typer, 'scripid': scripid, 'category': category, 'applicantname': applicantname,
+                   'depository': depository, 'applicationno': applicationno,
+                   'dpid': dpid, 'clientbenfid': clientbenfid, 'panno': panno, 'accountnumber_upiid': accountnumber_upiid,
+                   'bidid': bidid, 'quantity': quantity, 'rate': rate, 'cuttoffflag': cuttoffflag,
+                   'orderno': orderno, 'actioncode': actioncode, 'company': company, 'membercode': zebutrade_membercode,
+                   'loginid': zebutrade_loginid, 'password': zebutrade_password, 'ibbsid': zebutrade_ibbsid}
 
-    response = requests.request("POST", "https://ibbs.bseindia.com/ibbsapi/ibbsapiservice.svc/v1/ipoorder",
-                                data=data_json, headers=headers, verify=False)
-    resp=response.json()
-    flash(resp['bids'][0]['message'])
-    return redirect(url_for('ipo_index'))
+        response = requests.post(url=url, headers=headers, data=json.dumps(payload), verify=False)
+        checksum = response.json()['checksum']
+        data_json = response.json()['data_json']
+        url = 'https://ibbs.bseindia.com/ibbsmsgapi/iBBSWebBroadcastApi.svc/v1/login'
+        body = {"membercode": zebutrade_membercode, "loginid": zebutrade_loginid,
+                "password": zebutrade_password, "ibbsid": zebutrade_ibbsid}
+        headers = {'content-type': 'application/json', "User-Agent": USER_AGENT}
+        r = requests.post(url, data=json.dumps(body), headers=headers, verify=False)
+        # print(r.text)
+        token = json.loads(r.text)['token']
+        headers = {
+            'Membercode': zebutrade_membercode,
+            'Login': zebutrade_loginid,
+            'Token': token,
+            'Content-Type': "application/json",
+            'Checksum': checksum,
+            "User-Agent": USER_AGENT
+        }
 
-
+        response = requests.request("POST", "https://ibbs.bseindia.com/ibbsapi/ibbsapiservice.svc/v1/ipoorder",
+                                    data=data_json, headers=headers, verify=False)
+        resp=response.json()
+        flash(resp['bids'][0]['message'])
+        return redirect(url_for('ipo_index'))
 
 @app.route('/admin_login/', methods=['GET', 'POST'])
 def admin_login():
     return render_template('ad_login.html')
-
 
 @app.route('/ad_auth/', methods=['GET', 'POST'])
 def ad_auth():
